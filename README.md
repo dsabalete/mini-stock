@@ -154,13 +154,43 @@ Las operaciones de cada acción se envían agrupadas a D1 para que la actualizac
 de stock, el estado de la solicitud y el movimiento de auditoría no queden
 desincronizados.
 
-### Importante antes de abrirlo a usuarios reales
+### Configurar Cloudflare Access para producción
 
-El login actual solo valida el dominio en el navegador y el administrador de demo
-es una identidad simulada. Para producción real protege las rutas de escritura
-con Cloudflare Access, un proveedor de identidad corporativo o una sesión firmada
-en el servidor; no consideres el correo enviado por el navegador una prueba de
-identidad suficiente.
+La aplicación valida en el servidor el JWT que Cloudflare Access envía en
+`Cf-Access-Jwt-Assertion`. Las rutas protegidas son `POST /api/movements`,
+`POST /api/requests` y `PATCH /api/requests/:id`.
+
+1. Despliega primero la aplicación en Pages y asígnale un dominio propio, por
+   ejemplo `stock.example.com`.
+
+2. En Cloudflare Zero Trust ve a **Access > Applications > Add an application**,
+   elige **Self-hosted** y crea una aplicación para `stock.example.com`. Añade una
+   política **Allow** para los usuarios o grupos corporativos autorizados. Access
+   deniega por defecto a quien no coincide con una política.
+
+3. En los detalles de la aplicación copia el **Application Audience (AUD)**.
+
+4. En Cloudflare Pages añade estas variables de entorno para **Production**:
+
+   - `ACCESS_TEAM_DOMAIN`: `https://TU-EQUIPO.cloudflareaccess.com`
+   - `ACCESS_AUD`: el Application Audience copiado en el paso anterior
+
+   No las pongas en el código ni en `.env` del repositorio. El servidor consulta
+   automáticamente las claves públicas de Access y verifica firma, emisor,
+   audiencia, expiración y algoritmo del token.
+
+5. Vuelve a desplegar y prueba una operación desde la interfaz. Una petición sin
+   JWT debe responder `401`; una petición con un token caducado o de otra
+   aplicación también debe responder `401`.
+
+Para desarrollo local, si necesitas escribir en la D1 local sin pasar por Access,
+puedes definir temporalmente `ACCESS_ALLOW_INSECURE_LOCAL=true` en el entorno de
+Wrangler. No configures esa variable en Production.
+
+El login visual de la aplicación sigue siendo una interfaz de demo; la seguridad
+real la proporciona ahora la política de Cloudflare Access y la validación del
+JWT en el servidor. Cloudflare recomienda validar el token en el origen para
+rechazar peticiones que puedan saltarse el proxy por una configuración incorrecta.
 
 ## Estructura principal
 
