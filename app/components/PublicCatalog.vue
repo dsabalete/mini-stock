@@ -1,0 +1,25 @@
+<script setup lang="ts">
+import { computed, shallowRef } from 'vue'
+import type { Product } from '../composables/useInventory'
+
+const props = defineProps<{ products: Product[]; email: string }>()
+const emit = defineEmits<{ request: [productId: number, quantity: number] }>()
+const search = shallowRef('')
+const selectedLine = shallowRef('ALL')
+const quantity = shallowRef<Record<number, number>>({})
+const visibleProducts = computed(() => props.products.filter((product) => {
+  const query = search.value.toLowerCase()
+  return (!query || `${product.name} ${product.sku} ${product.ref}`.toLowerCase().includes(query)) && (selectedLine.value === 'ALL' || product.line === selectedLine.value)
+}))
+const lines = computed(() => ['ALL', ...new Set(props.products.map((product) => product.line))])
+function getQuantity(productId: number) { return quantity.value[productId] ?? 1 }
+function request(product: Product) { emit('request', product.id, getQuantity(product.id)) }
+</script>
+
+<template>
+  <section class="public-catalog">
+    <div class="catalog-hero"><div><p class="eyebrow">Adidas × Audi F1</p><h1>Regalos para el equipo</h1><p>Selecciona una referencia disponible. Tu solicitud quedará bloqueada hasta que Operations la gestione.</p></div><div class="request-protocol"><span class="protocol-line"></span><strong>PROTOCOLO DE PEDIDO</strong><span>01 · Seleccionar</span><span>02 · Solicitar</span><span>03 · Confirmar</span></div></div>
+    <div class="catalog-toolbar"><label class="search-box"><span>⌕</span><input v-model="search" type="search" placeholder="Buscar por producto o referencia..." /></label><div class="catalog-lines"><button v-for="line in lines" :key="line" :class="{ active: selectedLine === line }" @click="selectedLine = line">{{ line === 'ALL' ? 'Todos' : line }}</button></div></div>
+    <div class="catalog-grid"><article v-for="product in visibleProducts" :key="product.id" class="product-card" :class="{ 'product-card--locked': product.locked || product.stock === 0 }"><div class="product-card-top"><span class="line-tag" :class="`line-tag--${product.accent}`">{{ product.line }}</span><span v-if="product.locked" class="locked-chip">▣ Bloqueado</span><span v-else class="available-chip"><i></i> {{ product.stock }} disponibles</span></div><div class="product-visual" :class="`product-visual--${product.accent}`"><span>{{ product.line === 'DRIVER' ? 'A' : product.line === 'ACCESSORIES' ? '◒' : '×' }}</span></div><h2>{{ product.name }}</h2><div class="product-meta"><span>{{ product.sku }}</span><span>{{ product.ref }}</span></div><div v-if="product.locked" class="locked-message">Solicitud pendiente de gestión por administrador.</div><div v-else-if="product.stock > 0" class="product-action"><div class="quantity-input"><button @click="quantity[product.id] = Math.max(1, getQuantity(product.id) - 1)">−</button><input v-model.number="quantity[product.id]" type="number" min="1" :max="product.stock" /><button @click="quantity[product.id] = Math.min(product.stock, getQuantity(product.id) + 1)">＋</button></div><button class="primary-button" @click="request(product)">Solicitar <span>→</span></button></div><div v-else class="locked-message">Sin unidades disponibles.</div></article></div>
+  </section>
+</template>
