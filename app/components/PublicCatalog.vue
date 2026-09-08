@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue'
+import { computed, reactive, shallowRef } from 'vue'
 import type { Product } from '../composables/useInventory'
 
 const props = defineProps<{ products: Product[]; email: string }>()
 const emit = defineEmits<{ request: [productId: number, quantity: number] }>()
 const search = shallowRef('')
 const selectedLine = shallowRef('ALL')
-const quantity = shallowRef<Record<number, number>>({})
+const quantity = reactive<Record<number, number>>({})
 const zoomedProduct = shallowRef<Product | null>(null)
 const visibleProducts = computed(() => props.products.filter((product) => {
   const query = search.value.toLowerCase()
   return (!query || `${product.name} ${product.sku} ${product.ref}`.toLowerCase().includes(query)) && (selectedLine.value === 'ALL' || product.line === selectedLine.value)
 }))
 const lines = computed(() => ['ALL', ...new Set(props.products.map((product) => product.line))])
-function getQuantity(productId: number) { return quantity.value[productId] ?? 1 }
+function getQuantity(productId: number) { return quantity[productId] ?? 1 }
 function request(product: Product) { emit('request', product.id, getQuantity(product.id)) }
 </script>
 
