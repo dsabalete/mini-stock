@@ -38,7 +38,7 @@ function manage(id: number, decision: 'approved' | 'rejected') {
       <div class="brand-lockup">
         <div class="brand-mark"><span></span><span></span><span></span></div>
         <div>
-          <p class="brand-name">audi<span>f1</span></p>
+          <p class="brand-name">Stock <span>F1</span></p>
           <p class="brand-subtitle">Revolut hospitality</p>
         </div>
       </div>
@@ -61,7 +61,7 @@ function manage(id: number, decision: 'approved' | 'rejected') {
       <div class="brand-lockup">
         <div class="brand-mark"><span></span><span></span><span></span></div>
         <div>
-          <p class="brand-name">audi<span>f1</span></p>
+          <p class="brand-name">Stock <span>F1</span></p>
           <p class="brand-subtitle">Revolut hospitality</p>
         </div>
       </div>
