@@ -12,7 +12,6 @@ const toast = shallowRef('')
 const loginError = shallowRef('')
 const helpOpen = shallowRef(false)
 const adminEmail = computed(() => (runtimeConfig.public.adminEmail || '').trim().toLowerCase())
-const adminDemoEmail = computed(() => adminEmail.value || 'operations@superwagen.es')
 const isAdmin = computed(() => sessionEmail.value === adminEmail.value)
 onMounted(() => load())
 
@@ -57,9 +56,7 @@ async function manage(id: number, decision: 'approved' | 'rejected') {
         placeholder="nombre@superwagen.es" @keyup.enter="enterWorkspace" />
       <p v-if="loginError" class="login-error">{{ loginError }}</p><button class="primary-button login-button"
         @click="enterWorkspace">Entrar al catálogo <span>→</span></button>
-      <p class="login-hint">El stock es gestionado exclusivamente por Operations.</p><button class="admin-demo"
-        @click="email = adminDemoEmail; enterWorkspace()">Acceder como administrador de demo
-        <span>↗</span></button>
+      <p class="login-hint">El stock es gestionado exclusivamente por Operations.</p>
     </div>
     <div class="login-footer"><span>Acceso interno · Uso corporativo</span></div>
   </div>
@@ -180,7 +177,7 @@ async function manage(id: number, decision: 'approved' | 'rejected') {
                 </div>
                 <div class="activity-copy"><strong>{{ item.title }}</strong><span>{{ item.detail }}</span></div>
                 <div class="activity-amount" :class="`activity-amount--${item.type}`">{{ item.type === 'in' ? '+' : '-'
-                  }}{{ item.amount }} <small>uds.</small></div><time>{{ item.time }}</time>
+                }}{{ item.amount }} <small>uds.</small></div><time>{{ item.time }}</time>
               </div>
             </div>
           </div>

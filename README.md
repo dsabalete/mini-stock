@@ -186,10 +186,10 @@ Para desarrollo local, si necesitas escribir en la D1 local sin pasar por Access
 puedes definir temporalmente `ACCESS_ALLOW_INSECURE_LOCAL=true` en el entorno de
 Wrangler. No configures esa variable en Production.
 
-El login visual de la aplicación sigue siendo una interfaz de demo; la seguridad
-real la proporciona ahora la política de Cloudflare Access y la validación del
-JWT en el servidor. Cloudflare recomienda validar el token en el origen para
-rechazar peticiones que puedan saltarse el proxy por una configuración incorrecta.
+El acceso visual de la aplicación es una capa de interfaz; la seguridad real la
+proporciona ahora la política de Cloudflare Access y la validación del JWT en el
+servidor. Cloudflare recomienda validar el token en el origen para rechazar
+peticiones que puedan saltarse el proxy por una configuración incorrecta.
 
 ## Estructura principal
 

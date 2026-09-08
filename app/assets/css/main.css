@@ -1285,21 +1285,6 @@ button {
   font-size: 9px;
   margin: 15px 0 0;
 }
-.admin-demo {
-  display: block;
-  border: 0;
-  background: none;
-  color: #7f8994;
-  font-size: 9px;
-  margin: 38px auto 0;
-}
-.admin-demo:hover {
-  color: #fff;
-}
-.admin-demo span {
-  color: var(--red);
-  margin-left: 5px;
-}
 .login-footer {
   position: absolute;
   bottom: 25px;
