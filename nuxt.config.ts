@@ -8,6 +8,11 @@ export default defineNuxtConfig({
       title: 'Stock F1',
     },
   },
+  runtimeConfig: {
+    public: {
+      adminEmail: process.env.ADMIN_EMAIL,
+    },
+  },
   css: ['~/assets/css/main.css'],
   nitro: {
     preset: 'cloudflare_pages',

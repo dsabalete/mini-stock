@@ -75,7 +75,7 @@ La configuración de despliegue se encuentra en [`wrangler.toml`](./wrangler.tom
 
 ## Acceso
 
-El acceso requiere un correo con dominio `@superwagen.es`. El usuario administrador configurado para el panel es `admin@superwagen.es` durante el desarrollo.
+El acceso requiere un correo con dominio `@superwagen.es`. El usuario administrador del panel se toma de la variable de entorno `ADMIN_EMAIL` definida en `.env` (por ejemplo `ADMIN_EMAIL=admin@superwagen.es`).
 
 El inventario se persiste en Cloudflare D1. El esquema está en `migrations/0001_initial.sql` y los datos iniciales en `seed.sql`.
 
@@ -171,7 +171,6 @@ La aplicación valida en el servidor el JWT que Cloudflare Access envía en
 3. En los detalles de la aplicación copia el **Application Audience (AUD)**.
 
 4. En Cloudflare Pages añade estas variables de entorno para **Production**:
-
    - `ACCESS_TEAM_DOMAIN`: `https://TU-EQUIPO.cloudflareaccess.com`
    - `ACCESS_AUD`: el Application Audience copiado en el paso anterior
 

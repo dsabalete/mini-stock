@@ -3,6 +3,7 @@ import { computed, onMounted, shallowRef } from 'vue'
 import { useInventory } from './composables/useInventory'
 import HelpDialog from './components/HelpDialog.vue'
 
+const runtimeConfig = useRuntimeConfig()
 const { activeFilter, filteredProducts, search, setFilter, selectedProduct, openMovement, closeMovement, recordMovement, metrics, recentMovements, movementOpen, requests, submitRequest, manageRequest, load, loading } = useInventory()
 const email = shallowRef('')
 const sessionEmail = shallowRef('')
@@ -10,7 +11,9 @@ const view = shallowRef<'public' | 'admin'>('public')
 const toast = shallowRef('')
 const loginError = shallowRef('')
 const helpOpen = shallowRef(false)
-const isAdmin = computed(() => sessionEmail.value === 'admin@superwagen.es')
+const adminEmail = computed(() => (runtimeConfig.public.adminEmail || '').trim().toLowerCase())
+const adminDemoEmail = computed(() => adminEmail.value || 'operations@superwagen.es')
+const isAdmin = computed(() => sessionEmail.value === adminEmail.value)
 onMounted(() => load())
 
 function enterWorkspace() {
@@ -55,7 +58,7 @@ async function manage(id: number, decision: 'approved' | 'rejected') {
       <p v-if="loginError" class="login-error">{{ loginError }}</p><button class="primary-button login-button"
         @click="enterWorkspace">Entrar al catálogo <span>→</span></button>
       <p class="login-hint">El stock es gestionado exclusivamente por Operations.</p><button class="admin-demo"
-        @click="email = 'operations@superwagen.es'; enterWorkspace()">Acceder como administrador de demo
+        @click="email = adminDemoEmail; enterWorkspace()">Acceder como administrador de demo
         <span>↗</span></button>
     </div>
     <div class="login-footer"><span>Acceso interno · Uso corporativo</span></div>
