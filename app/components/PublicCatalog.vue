@@ -37,7 +37,7 @@ function request(product: Product) { emit('request', product.id, getQuantity(pro
       <article v-for="product in visibleProducts" :key="product.id" class="product-card"
         :class="{ 'product-card--locked': product.locked || product.stock === 0 }">
         <div class="product-card-top"><span class="line-tag" :class="`line-tag--${product.accent}`">{{ product.line
-            }}</span><span v-if="product.locked" class="locked-chip">▣ Bloqueado</span><span v-else
+        }}</span><span v-if="product.locked" class="locked-chip">▣ Bloqueado</span><span v-else
             class="available-chip"><i></i> {{ product.stock }} disponibles</span></div><button class="product-visual"
           :class="`product-visual--${product.accent}`" type="button" :aria-label="`Ampliar imagen de ${product.name}`"
           @click="zoomedProduct = product"><img :src="`/assets/products/${product.ref}.jpg`" :alt="product.name"
@@ -45,7 +45,7 @@ function request(product: Product) { emit('request', product.id, getQuantity(pro
         <h2>{{ product.name }}</h2>
         <div class="product-meta"><span>{{ product.sku }}</span><span>{{ product.ref }}</span></div>
         <div class="public-locations"><span>SC <b>{{ product.stockSC }}</b></span><span>SBD <b>{{ product.stockSBD
-              }}</b></span></div>
+        }}</b></span></div>
         <div v-if="product.locked" class="locked-message">Solicitud pendiente de gestión por administrador.</div>
         <div v-else-if="product.stock > 0" class="product-action">
           <div class="quantity-input"><button
@@ -63,7 +63,7 @@ function request(product: Product) { emit('request', product.id, getQuantity(pro
             @click="zoomedProduct = null">×</button><img :src="`/assets/products/${zoomedProduct.ref}.jpg`"
             :alt="zoomedProduct.name" />
           <div class="lightbox-caption"><span class="line-tag" :class="`line-tag--${zoomedProduct.accent}`">{{
-              zoomedProduct.line }} · {{ zoomedProduct.ref }}</span><strong>{{ zoomedProduct.name
+            zoomedProduct.line }} · {{ zoomedProduct.ref }}</span><strong>{{ zoomedProduct.name
               }}</strong><small>Imagen de producto · Haz clic fuera para cerrar</small></div>
         </div>
       </div>

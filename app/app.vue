@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue'
+import { computed, onMounted, shallowRef } from 'vue'
 import { useInventory } from './composables/useInventory'
 import HelpDialog from './components/HelpDialog.vue'
 
-const { activeFilter, filteredProducts, search, setFilter, selectedProduct, openMovement, closeMovement, recordMovement, metrics, recentMovements, movementOpen, requests, submitRequest, manageRequest } = useInventory()
+const { activeFilter, filteredProducts, search, setFilter, selectedProduct, openMovement, closeMovement, recordMovement, metrics, recentMovements, movementOpen, requests, submitRequest, manageRequest, load, loading } = useInventory()
 const email = shallowRef('')
 const sessionEmail = shallowRef('')
 const view = shallowRef<'public' | 'admin'>('public')
@@ -11,6 +11,7 @@ const toast = shallowRef('')
 const loginError = shallowRef('')
 const helpOpen = shallowRef(false)
 const isAdmin = computed(() => sessionEmail.value === 'admin@superwagen.es')
+onMounted(() => load())
 
 function enterWorkspace() {
   const normalizedEmail = email.value.trim().toLowerCase()
@@ -22,12 +23,13 @@ function enterWorkspace() {
   sessionEmail.value = normalizedEmail
   view.value = isAdmin.value ? 'admin' : 'public'
 }
-function requestProduct(productId: number, quantity: number) {
-  if (submitRequest(sessionEmail.value, productId, quantity)) toast.value = 'Solicitud enviada. El artículo queda bloqueado hasta su gestión.'
+async function requestProduct(productId: number, quantity: number) {
+  try { await submitRequest(sessionEmail.value, productId, quantity); toast.value = 'Solicitud enviada. El artículo queda bloqueado hasta su gestión.' }
+  catch { toast.value = 'No se pudo enviar la solicitud. Comprueba la disponibilidad.' }
   window.setTimeout(() => { toast.value = '' }, 4000)
 }
-function manage(id: number, decision: 'approved' | 'rejected') {
-  manageRequest(id, decision)
+async function manage(id: number, decision: 'approved' | 'rejected') {
+  await manageRequest(id, decision)
   toast.value = decision === 'approved' ? 'Pedido aprobado y stock actualizado.' : 'Solicitud rechazada. El artículo vuelve a estar disponible.'
   window.setTimeout(() => { toast.value = '' }, 4000)
 }
@@ -59,6 +61,7 @@ function manage(id: number, decision: 'approved' | 'rejected') {
     <div class="login-footer"><span>Acceso interno · Uso corporativo</span></div>
   </div>
   <div v-else class="app-shell">
+    <div v-if="loading" class="loading-overlay">Cargando inventario…</div>
     <aside class="sidebar">
       <div class="brand-lockup">
         <div class="brand-mark"><span></span><span></span><span></span></div>

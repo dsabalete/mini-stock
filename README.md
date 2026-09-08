@@ -77,7 +77,90 @@ La configuración de despliegue se encuentra en [`wrangler.toml`](./wrangler.tom
 
 El acceso requiere un correo con dominio `@superwagen.es`. El usuario administrador configurado para el panel es `admin@superwagen.es` durante el desarrollo.
 
-La aplicación utiliza actualmente datos de inventario en memoria; los cambios se pierden al reiniciar la sesión o el servidor.
+El inventario se persiste en Cloudflare D1. El esquema está en `migrations/0001_initial.sql` y los datos iniciales en `seed.sql`.
+
+## Configurar D1 en local y producción
+
+1. Instala dependencias y autentica Wrangler:
+
+```bash
+npm install
+npx wrangler login
+```
+
+2. Crea la base de datos una sola vez:
+
+```bash
+npx wrangler d1 create mini-stock
+```
+
+Wrangler devolverá un `database_id`. Sustituye
+`REPLACE_WITH_D1_DATABASE_ID` por ese valor en [`wrangler.toml`](./wrangler.toml).
+
+3. Crea el esquema y carga los datos iniciales en la base local:
+
+```bash
+npm run db:migrate:local
+npm run db:seed:local
+```
+
+4. Ejecuta la aplicación con el runtime de Cloudflare y la D1 local:
+
+```bash
+npm run dev:cloudflare
+```
+
+La aplicación estará disponible en `http://localhost:8788`. `npm run dev` sirve Nuxt directamente y no proporciona el binding D1; para esta integración usa `dev:cloudflare`.
+
+5. Antes del primer despliegue, aplica la migración y el seed en la base remota:
+
+```bash
+npm run db:migrate:remote
+npm run db:seed:remote
+```
+
+Ejecuta el seed remoto una sola vez: utiliza `INSERT OR IGNORE`, pero no es necesario repetirlo en cada despliegue.
+
+6. Despliega Pages:
+
+```bash
+npm run deploy
+```
+
+Si usas la integración Git de Cloudflare Pages, configura el comando de build
+`npm run build:cloudflare` y el directorio de salida `dist`. El binding `DB` debe
+estar configurado para el proyecto Pages en producción y apuntar a la base D1
+`mini-stock`; Wrangler lo toma de `wrangler.toml` cuando despliegas desde CLI.
+
+7. Verifica la producción:
+
+```bash
+npx wrangler d1 execute mini-stock --remote --command="SELECT COUNT(*) AS products FROM products"
+```
+
+Después comprueba desde la interfaz que una solicitud, un movimiento y una
+aprobación sobreviven a una recarga. Las lecturas y escrituras de D1 tienen los
+límites diarios del plan gratuito; si se alcanza uno, Cloudflare devuelve error
+hasta el siguiente reinicio diario.
+
+## API persistente
+
+- `GET /api/inventory`: productos, solicitudes y actividad reciente.
+- `POST /api/movements`: registra entradas y salidas por ubicación.
+- `POST /api/requests`: crea una solicitud y bloquea el producto.
+- `PATCH /api/requests/:id`: aprueba o rechaza una solicitud.
+
+Las operaciones de cada acción se envían agrupadas a D1 para que la actualización
+de stock, el estado de la solicitud y el movimiento de auditoría no queden
+desincronizados.
+
+### Importante antes de abrirlo a usuarios reales
+
+El login actual solo valida el dominio en el navegador y el administrador de demo
+es una identidad simulada. Para producción real protege las rutas de escritura
+con Cloudflare Access, un proveedor de identidad corporativo o una sesión firmada
+en el servidor; no consideres el correo enviado por el navegador una prueba de
+identidad suficiente.
 
 ## Estructura principal
 

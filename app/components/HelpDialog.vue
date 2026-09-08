@@ -37,13 +37,7 @@ onBeforeUnmount(() => {
 <template>
   <Transition name="help">
     <div v-if="open" class="help-backdrop" @click.self="close">
-      <section
-        id="help-dialog"
-        class="help-dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="help-dialog-title"
-      >
+      <section id="help-dialog" class="help-dialog" role="dialog" aria-modal="true" aria-labelledby="help-dialog-title">
         <div class="help-dialog__header">
           <div>
             <p class="eyebrow">Centro de ayuda</p>

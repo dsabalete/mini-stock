@@ -6,6 +6,11 @@
     "dev": "nuxt dev",
     "build": "nuxt build",
     "build:cloudflare": "nuxt build --preset=cloudflare_pages",
+    "db:migrate:local": "npx wrangler d1 migrations apply mini-stock --local",
+    "db:migrate:remote": "npx wrangler d1 migrations apply mini-stock --remote",
+    "db:seed:local": "npx wrangler d1 execute mini-stock --local --file=seed.sql",
+    "db:seed:remote": "npx wrangler d1 execute mini-stock --remote --file=seed.sql",
+    "dev:cloudflare": "npm run build:cloudflare && npx wrangler pages dev dist",
     "deploy": "npm run build:cloudflare && npx wrangler pages deploy dist",
     "preview": "nuxt preview"
   },
