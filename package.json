@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt build",
+    "build:cloudflare": "nuxt build --preset=cloudflare_pages",
+    "deploy": "npm run build:cloudflare && npx wrangler pages deploy dist",
     "preview": "nuxt preview"
   },
   "dependencies": {
@@ -15,6 +17,7 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.0",
-    "tailwindcss": "^4.1.0"
+    "tailwindcss": "^4.1.0",
+    "wrangler": "^4.129.1"
   }
 }
