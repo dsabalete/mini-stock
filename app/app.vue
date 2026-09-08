@@ -68,7 +68,7 @@ function manage(id: number, decision: 'approved' | 'rejected') {
       <nav class="main-nav" aria-label="Navegación principal">
         <p class="nav-label">Workspace</p><button class="nav-item nav-item--active"
           @click="view = isAdmin ? 'admin' : 'public'"><span class="nav-icon">▦</span> {{ isAdmin ? 'Panel de control' :
-          'Catálogo de regalos' }}</button><button v-if="isAdmin" class="nav-item" @click="view = 'admin'"><span
+            'Catálogo de regalos' }}</button><button v-if="isAdmin" class="nav-item" @click="view = 'admin'"><span
             class="nav-icon">♢</span> Solicitudes <span class="nav-count nav-count--red">{{ metrics.pendingRequests
             }}</span></button><button class="nav-item" @click="view = 'public'"><span class="nav-icon">⌘</span> Ver
           catálogo</button>
@@ -94,10 +94,9 @@ function manage(id: number, decision: 'approved' | 'rejected') {
     <main class="main-content">
       <header class="topbar">
         <div class="breadcrumb"><span>Workspace</span><b>/</b><strong>{{ view === 'admin' ? 'Panel de control' :
-            'Catálogo de regalos' }}</strong></div>
+          'Catálogo de regalos' }}</strong></div>
         <div class="top-actions"><span class="role-badge" :class="{ 'role-badge--admin': isAdmin }">{{ isAdmin ?
-          'Administrador' : 'Usuario identificado' }}</span><span class="sync-status"><i></i> Sistema
-            operativo</span><button class="help-button">?</button></div>
+          'Administrador' : 'Usuario identificado' }}</span><button class="help-button">?</button></div>
       </header>
       <template v-if="view === 'public'">
         <PublicCatalog :products="filteredProducts" :email="sessionEmail" @request="requestProduct" />
@@ -115,7 +114,8 @@ function manage(id: number, decision: 'approved' | 'rejected') {
             <div class="metric-top"><span class="metric-label">Unidades en stock</span><span class="metric-badge">+8.4%
                 <span>↗</span></span></div><strong class="metric-number">{{ metrics.totalStock }}</strong>
             <div class="metric-foot"><span>unidades físicas</span><span class="mini-bars"><i
-                  v-for="bar in [35, 52, 42, 72, 55, 82, 66, 92]" :key="bar" :style="{ height: `${bar}%` }"></i></span></div>
+                  v-for="bar in [35, 52, 42, 72, 55, 82, 66, 92]" :key="bar" :style="{ height: `${bar}%` }"></i></span>
+            </div>
           </div>
           <div class="metric-card">
             <div class="metric-top"><span class="metric-label">Solicitudes</span><span
@@ -170,7 +170,7 @@ function manage(id: number, decision: 'approved' | 'rejected') {
                 </div>
                 <div class="activity-copy"><strong>{{ item.title }}</strong><span>{{ item.detail }}</span></div>
                 <div class="activity-amount" :class="`activity-amount--${item.type}`">{{ item.type === 'in' ? '+' : '-'
-                  }}{{ item.amount }} <small>uds.</small></div><time>{{ item.time }}</time>
+                }}{{ item.amount }} <small>uds.</small></div><time>{{ item.time }}</time>
               </div>
             </div>
           </div>

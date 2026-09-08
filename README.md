@@ -50,6 +50,15 @@ El proyecto está preparado para Cloudflare Pages mediante Wrangler:
 npm run deploy
 ```
 
+Si se configura el despliegue desde el panel de Cloudflare Pages, utiliza:
+
+- Comando de build: `npm run build:cloudflare`
+- Directorio de salida: `dist`
+- Comando de despliegue: `npx wrangler pages deploy dist`
+
+No uses `wrangler deploy`, porque ese comando corresponde a Workers y requiere
+un entry point de Worker distinto al generado por este proyecto.
+
 La configuración de despliegue se encuentra en [`wrangler.toml`](./wrangler.toml).
 
 ## Acceso
