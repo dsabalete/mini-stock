@@ -50,11 +50,23 @@ El proyecto está preparado para Cloudflare Pages mediante Wrangler:
 npm run deploy
 ```
 
-Si se configura el despliegue desde el panel de Cloudflare Pages, utiliza:
+Si conectas el repositorio mediante la integración Git de Cloudflare Pages, configura únicamente:
 
 - Comando de build: `npm run build:cloudflare`
 - Directorio de salida: `dist`
-- Comando de despliegue: `npx wrangler pages deploy dist`
+
+Cloudflare Pages publicará automáticamente el contenido de `dist` al terminar el
+build. No configures `npm run deploy` ni `npx wrangler pages deploy dist` como
+comando de build o de despliegue dentro de ese flujo: eso inicia un segundo
+despliegue y requiere que exista previamente un proyecto Pages con ese nombre.
+
+Para usar subida directa con Wrangler desde una terminal o CI, crea primero el
+proyecto Pages una sola vez y después ejecuta `npm run deploy`:
+
+```bash
+npx wrangler pages project create mini-stock
+npm run deploy
+```
 
 No uses `wrangler deploy`, porque ese comando corresponde a Workers y requiere
 un entry point de Worker distinto al generado por este proyecto.
