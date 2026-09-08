@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
 import { useInventory } from './composables/useInventory'
+import HelpDialog from './components/HelpDialog.vue'
 
 const { activeFilter, filteredProducts, search, setFilter, selectedProduct, openMovement, closeMovement, recordMovement, metrics, recentMovements, movementOpen, requests, submitRequest, manageRequest } = useInventory()
 const email = shallowRef('')
@@ -8,6 +9,7 @@ const sessionEmail = shallowRef('')
 const view = shallowRef<'public' | 'admin'>('public')
 const toast = shallowRef('')
 const loginError = shallowRef('')
+const helpOpen = shallowRef(false)
 const isAdmin = computed(() => sessionEmail.value === 'admin@superwagen.es')
 
 function enterWorkspace() {
@@ -96,7 +98,8 @@ function manage(id: number, decision: 'approved' | 'rejected') {
         <div class="breadcrumb"><span>Workspace</span><b>/</b><strong>{{ view === 'admin' ? 'Panel de control' :
           'Catálogo de regalos' }}</strong></div>
         <div class="top-actions"><span class="role-badge" :class="{ 'role-badge--admin': isAdmin }">{{ isAdmin ?
-          'Administrador' : 'Usuario identificado' }}</span><button class="help-button">?</button></div>
+          'Administrador' : 'Usuario identificado' }}</span><button class="help-button" type="button" aria-label="Abrir ayuda"
+            :aria-expanded="helpOpen" aria-controls="help-dialog" @click="helpOpen = true">?</button></div>
       </header>
       <template v-if="view === 'public'">
         <PublicCatalog :products="filteredProducts" :email="sessionEmail" @request="requestProduct" />
@@ -198,6 +201,7 @@ function manage(id: number, decision: 'approved' | 'rejected') {
       </template>
     </main>
     <StockMovementPanel :open="movementOpen" :product="selectedProduct" @close="closeMovement" @save="recordMovement" />
+    <HelpDialog :open="helpOpen" @close="helpOpen = false" />
     <Transition name="toast">
       <div v-if="toast" class="toast-message"><span>✓</span>{{ toast }}</div>
     </Transition>
