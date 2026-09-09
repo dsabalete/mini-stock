@@ -83,11 +83,6 @@ async function manage(id: number, decision: 'approved' | 'rejected') {
         </div>
       </nav>
       <div class="sidebar-bottom">
-        <div class="season-card"><span class="season-dot"></span>
-          <div>
-            <p class="season-label">Temporada activa</p><strong>2026 / EU</strong>
-          </div><span class="season-arrow">↗</span>
-        </div>
         <div class="user-profile">
           <div class="avatar">{{ isAdmin ? 'OP' : sessionEmail.slice(0, 2).toUpperCase() }}</div>
           <div><strong>{{ isAdmin ? 'Operations' : sessionEmail.split('@')[0] }}</strong><span>{{ isAdmin ?

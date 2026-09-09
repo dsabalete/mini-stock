@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, shallowRef } from 'vue'
+import { computed, reactive, shallowRef, watch } from 'vue'
 import type { Product } from '../composables/useInventory'
 
 const props = defineProps<{ products: Product[]; email: string }>()
@@ -8,12 +8,17 @@ const search = shallowRef('')
 const selectedLine = shallowRef('ALL')
 const quantity = reactive<Record<number, number>>({})
 const zoomedProduct = shallowRef<Product | null>(null)
+watch(() => props.products, (products) => {
+  products.forEach((product) => {
+    if (quantity[product.id] === undefined) quantity[product.id] = 0
+  })
+}, { immediate: true })
 const visibleProducts = computed(() => props.products.filter((product) => {
   const query = search.value.toLowerCase()
   return (!query || `${product.name} ${product.sku} ${product.ref}`.toLowerCase().includes(query)) && (selectedLine.value === 'ALL' || product.line === selectedLine.value)
 }))
 const lines = computed(() => ['ALL', ...new Set(props.products.map((product) => product.line))])
-function getQuantity(productId: number) { return quantity[productId] ?? 1 }
+function getQuantity(productId: number) { return quantity[productId] ?? 0 }
 function request(product: Product) { emit('request', product.id, getQuantity(product.id)) }
 </script>
 
@@ -49,10 +54,10 @@ function request(product: Product) { emit('request', product.id, getQuantity(pro
         <div v-if="product.locked" class="locked-message">Solicitud pendiente de gestión por administrador.</div>
         <div v-else-if="product.stock > 0" class="product-action">
           <div class="quantity-input"><button
-              @click="quantity[product.id] = Math.max(1, getQuantity(product.id) - 1)">−</button><input
-              v-model.number="quantity[product.id]" type="number" min="1" :max="product.stock" /><button
+              @click="quantity[product.id] = Math.max(0, getQuantity(product.id) - 1)">−</button><input
+              v-model.number="quantity[product.id]" type="number" min="0" :max="product.stock" /><button
               @click="quantity[product.id] = Math.min(product.stock, getQuantity(product.id) + 1)">＋</button></div>
-          <button class="primary-button" @click="request(product)">Solicitar <span>→</span></button>
+          <button class="primary-button" :disabled="getQuantity(product.id) === 0" @click="request(product)">Solicitar <span>→</span></button>
         </div>
         <div v-else class="locked-message">Sin unidades disponibles.</div>
       </article>

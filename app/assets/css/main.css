@@ -150,36 +150,6 @@ button {
   border-top: 1px solid #25282d;
   padding: 18px 3px 0;
 }
-.season-card {
-  background: #181b20;
-  border: 1px solid #262b31;
-  border-radius: 6px;
-  padding: 12px 10px;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-}
-.season-dot {
-  width: 7px;
-  height: 7px;
-  background: var(--green);
-  border-radius: 50%;
-  box-shadow: 0 0 0 4px #24422b;
-}
-.season-label {
-  margin: 0 0 3px;
-  color: #747b85;
-  font-size: 9px;
-}
-.season-card strong {
-  font-family: "DM Mono", monospace;
-  font-size: 11px;
-  font-weight: 500;
-}
-.season-arrow {
-  margin-left: auto;
-  color: #717a83;
-}
 .user-profile {
   display: flex;
   align-items: center;
