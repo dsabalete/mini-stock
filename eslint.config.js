@@ -3,6 +3,7 @@ import globals from 'globals';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 import vue from 'eslint-plugin-vue';
+import vueEslintParser from 'vue-eslint-parser';
 import prettier from 'eslint-plugin-prettier';
 
 export default [
@@ -14,6 +15,7 @@ export default [
     languageOptions: {
       ecmaVersion: 2021,
       sourceType: 'module',
+      parser: typescriptParser,
       globals: {
         ...globals.browser,
         ...globals.node,
@@ -24,6 +26,7 @@ export default [
         getHeader: 'readonly',
         getRouterParam: 'readonly',
         readBody: 'readonly',
+        $fetch: 'readonly',
         // Vue 3 globals
         ref: 'readonly',
         reactive: 'readonly',
@@ -35,6 +38,15 @@ export default [
         // Pinia globals
         defineStore: 'readonly',
         storeToRefs: 'readonly',
+        // H3 globals
+        getRequestIP: 'readonly',
+        setHeader: 'readonly',
+        // Cloudflare Workers/Wrangler globals
+        D1Database: 'readonly',
+        // Additional H3 helpers
+        getCookie: 'readonly',
+        setCookie: 'readonly',
+        deleteCookie: 'readonly',
       },
     },
     plugins: {
@@ -49,16 +61,18 @@ export default [
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-unused-vars': [
         'error',
-        { argsIgnorePattern: '^_' },
+        { argsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' },
       ],
     },
   },
   {
     files: ['**/*.vue'],
     languageOptions: {
+      parser: vueEslintParser,
       parserOptions: {
         ecmaVersion: 2021,
         sourceType: 'module',
+        parser: typescriptParser,
       },
       globals: {
         ...globals.browser,

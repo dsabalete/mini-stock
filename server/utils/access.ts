@@ -135,7 +135,7 @@ export async function requireAccess(event: H3Event) {
     }); // At least 30 seconds
 
     return claims;
-  } catch (error) {
+  } catch (_error) {
     // Clear cache entry for invalid token
     tokenValidationCache.delete(token);
     throw createError({

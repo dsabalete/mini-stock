@@ -1,4 +1,4 @@
-import { getHeader } from 'h3';
+import { getHeader, H3Event } from 'h3';
 import { getDb } from './db';
 
 export interface AuditLogEntry {

@@ -40,12 +40,12 @@ async function checkDomainExists(domain: string): Promise<boolean> {
   try {
     const mxRecords = await dns.resolveMx(domain);
     return mxRecords.length > 0;
-  } catch (error) {
+  } catch {
     // If MX records don't exist, try A records as fallback
     try {
       await dns.resolve4(domain);
       return true;
-    } catch (aError) {
+    } catch {
       return false;
     }
   }
@@ -62,7 +62,7 @@ async function checkSPFRecord(domain: string): Promise<boolean> {
       .flat()
       .find(record => record.startsWith('v=spf1'));
     return !!spfRecord;
-  } catch (error) {
+  } catch {
     return false;
   }
 }
@@ -78,7 +78,7 @@ async function checkDMARCRecord(domain: string): Promise<boolean> {
       .flat()
       .find(record => record.startsWith('v=DMARC1'));
     return !!dmarcRecord;
-  } catch (error) {
+  } catch {
     return false;
   }
 }
@@ -89,13 +89,11 @@ async function checkDMARCRecord(domain: string): Promise<boolean> {
  * 1. Check common DKIM selectors (default, google, etc.)
  * 2. Or use a dedicated email verification service
  */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-function checkDKIMRecord(domain: string): Promise<boolean> {
+function checkDKIMRecord(_domain: string): Promise<boolean> {
   // Placeholder implementation - in reality would check specific DKIM selectors
   // In production, you would check common selectors like 'default', 'google', etc.
   return Promise.resolve(true);
 }
-/* eslint-enable @typescript-eslint/no-unused-vars */
 
 /**
  * Performs comprehensive email verification

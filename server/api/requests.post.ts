@@ -3,7 +3,7 @@ import { logAudit } from '../utils/audit';
 import { verifyEmailForRequest } from '../utils/emailVerification';
 
 export default defineEventHandler(async event => {
-  const verification = await verifyEmailForRequest(event);
+  await verifyEmailForRequest(event);
   const body = await readBody<{
     email: string;
     productId: number;
