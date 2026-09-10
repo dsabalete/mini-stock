@@ -146,6 +146,7 @@ export function useInventory() {
   return {
     activeFilter,
     filteredProducts,
+    products,
     search,
     setFilter,
     selectedProduct,

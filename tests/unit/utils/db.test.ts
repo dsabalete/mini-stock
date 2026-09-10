@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { productFromRow, getDb } from '@/server/utils/db'
+import { productFromRow, getDb } from '../../../server/utils/db'
 import { H3Event } from 'h3'
 
 describe('server/utils/db', () => {
@@ -61,9 +61,9 @@ describe('server/utils/db', () => {
       const event = {
         context: {
           cloudflare: {
-            env: { DB: mockDb },
-          },
-        },
+            env: { DB: mockDb }
+          }
+        }
       } as unknown as H3Event
 
       expect(getDb(event)).toBe(mockDb)
@@ -73,9 +73,9 @@ describe('server/utils/db', () => {
       const event = {
         context: {
           cloudflare: {
-            env: {},
-          },
-        },
+            env: {}
+          }
+        }
       } as unknown as H3Event
 
       expect(() => getDb(event)).toThrow(/Base de datos no disponible/)

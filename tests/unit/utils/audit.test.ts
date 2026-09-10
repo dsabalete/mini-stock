@@ -1,20 +1,28 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { logAudit } from '@/server/utils/audit'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { logAudit } from '../../../server/utils/audit'
 import { H3Event } from 'h3'
+
+vi.mock('h3', async () => {
+  const actual = await vi.importActual('h3')
+  return {
+    ...actual,
+    getHeader: vi.fn(),
+  }
+})
 
 describe('server/utils/audit', () => {
   let mockDb: any
-  let mockEvent: any
+  let mockEvent: H3Event
+  let statement: any
 
   beforeEach(() => {
-    mockDb = {
-      prepare: vi.fn().mockReturnValue({
-        bind: vi.fn().mockReturnValue({
-          run: vi.fn().mockResolvedValue({}),
-        }),
-      }),
+    statement = {
+      bind: vi.fn().mockReturnThis(),
+      run: vi.fn().mockResolvedValue({}),
     }
-
+    mockDb = {
+      prepare: vi.fn().mockReturnValue(statement),
+    }
     mockEvent = {
       context: {
         cloudflare: {
@@ -22,15 +30,6 @@ describe('server/utils/audit', () => {
         },
       },
     } as unknown as H3Event
-
-    // Mock getHeader from h3
-    vi.mock('h3', async () => {
-      const actual = await vi.importActual('h3')
-      return {
-        ...actual,
-        getHeader: vi.fn(),
-      }
-    })
   })
 
   it('should write an audit log entry to the database', async () => {
@@ -51,7 +50,7 @@ describe('server/utils/audit', () => {
     expect(mockDb.prepare).toHaveBeenCalledWith(
       expect.stringContaining('INSERT INTO audit_log')
     )
-    const bindArgs = mockDb.prepare().bind.mock.calls[0][0]
+    const bindArgs = statement.bind.mock.calls[0]
     expect(bindArgs).toContain('test_action')
     expect(bindArgs).toContain('product')
     expect(bindArgs).toContain(123)
@@ -62,7 +61,7 @@ describe('server/utils/audit', () => {
   })
 
   it('should not throw when database write fails', async () => {
-    mockDb.prepare().bind().run.mockRejectedValue(new Error('DB Error'))
+    statement.run.mockRejectedValue(new Error('DB Error'))
 
     const entry = {
       action: 'test_action',
@@ -73,6 +72,6 @@ describe('server/utils/audit', () => {
       details: {},
     }
 
-    await expect(logAudit(mockEvent, entry)).Resolves.not.toThrow()
+    await expect(logAudit(mockEvent, entry)).resolves.toBeUndefined()
   })
 })

@@ -1,68 +1,100 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import handler from '@/server/api/movements.post'
 import { H3Event } from 'h3'
 
+// Mock the global defineEventHandler that Nuxt provides
+vi.stubGlobal('defineEventHandler', (fn: any) => fn)
+vi.stubGlobal('readBody', vi.fn())
+vi.stubGlobal('createError', (error: { statusCode: number; statusMessage: string }) =>
+  Object.assign(new Error(error.statusMessage), error)
+)
+
+// Mock h3 utilities and access before any imports
+vi.mock('h3', async () => {
+  const actual = await vi.importActual('h3')
+  return {
+    ...actual,
+    defineEventHandler: (fn: any) => fn,
+    readBody: vi.fn(),
+  }
+})
+
+vi.mock('../../../server/utils/access', () => ({
+  requireAccess: vi.fn().mockResolvedValue({ email: 'admin@example.com' })
+}))
+
 describe('server/api/movements.post', () => {
-  let mockDb: any
-  let mockEvent: any
+  let handler: any
 
   beforeEach(() => {
-    mockDb = {
+    // Clear module cache to get fresh imports with mocks
+    vi.resetModules()
+  })
+
+  it('should throw 400 for invalid input', async () => {
+    // Mock the db utility
+    const mockDb = {
       prepare: vi.fn().mockReturnValue({
         bind: vi.fn().mockReturnValue({
-          first: vi
-            .fn()
-            .mockResolvedValue({
-              id: 1,
-              name: 'Product 1',
-              stock_sc: 10,
-              stock_sbd: 5,
-            }),
+          first: vi.fn().mockResolvedValue({ id: 1, name: 'Product 1', stock_sc: 10, stock_sbd: 5 }),
           run: vi.fn().mockResolvedValue({}),
         }),
       }),
       batch: vi.fn().mockResolvedValue({}),
     }
 
-    mockEvent = {
+    // Mock event with db
+    const mockEvent = {
       context: {
         cloudflare: {
-          env: { DB: mockDb },
-        },
-      },
-    } as unknown as H3Event
-  })
-
-  it('should throw 400 for invalid input', async () => {
-    // Mock readBody from h3
-    vi.mock('h3', async () => {
-      const actual = await vi.importActual('h3')
-      return {
-        ...actual,
-        readBody: vi
-          .fn()
-          .mockResolvedValue({
-            productId: 1,
-            type: 'invalid',
-            quantity: 1,
-            location: 'SC',
-          }),
+          env: { DB: mockDb }
+        }
       }
-    })
+    } as unknown as H3Event
 
-    // We need to mock requireAccess
-    vi.mock('@/server/utils/access', () => ({
-      requireAccess: vi.fn().mockResolvedValue({ email: 'admin@example.com' }),
-    }))
+    // Mock readBody
+    ;(globalThis as any).readBody.mockResolvedValue({ productId: 1, type: 'invalid', quantity: 1, location: 'SC' })
+    
+    // Import handler after setting up mocks
+    handler = (await import('../../../server/api/movements.post')).default
 
-    // Since we can't easily mock top-level imports in the same file if they are already loaded,
-    // we might rely on the fact that handler is exported.
-    // However, in Vitest, the setup for this is tricky.
-    // For now, I'll assume the logic is tested via the input validation.
+    await expect(handler(mockEvent)).rejects.toThrow('Movimiento inválido')
   })
 
   it('should successfully record a movement', async () => {
-    // This handler uses readBody and requireAccess which are h3 utilities.
-    // In a real unit test, we would mock these.
+    // Mock the db utility
+    const mockDb = {
+      prepare: vi.fn().mockReturnValue({
+        bind: vi.fn().mockReturnValue({
+          first: vi.fn().mockResolvedValue({ id: 1, name: 'Product 1', stock_sc: 10, stock_sbd: 5 }),
+          run: vi.fn().mockResolvedValue({}),
+        }),
+      }),
+      batch: vi.fn().mockResolvedValue({}),
+    }
+
+    // Mock event with db
+    const mockEvent = {
+      context: {
+        cloudflare: {
+          env: { DB: mockDb }
+        }
+      }
+    } as unknown as H3Event
+
+    // Mock readBody
+    ;(globalThis as any).readBody.mockResolvedValue({ 
+      productId: 1, 
+      type: 'in', 
+      quantity: 5, 
+      location: 'SC', 
+      note: 'Test' 
+    })
+    
+    // Import handler after setting up mocks
+    handler = (await import('../../../server/api/movements.post')).default
+
+    const result = await handler(mockEvent)
+    expect(result).toHaveProperty('product')
+    expect(result).toHaveProperty('movement')
   })
 })
