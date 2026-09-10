@@ -68,7 +68,12 @@ export default defineEventHandler(async (event) => {
     },
   })
   return {
-    product: productFromRow({ ...request, stock_sc: sc, stock_sbd: sbd }),
+    product: productFromRow({
+      ...request,
+      stock_sc: sc,
+      stock_sbd: sbd,
+      locked: 0,
+    }),
     movement: {
       title: movementTitle,
       detail: `${request.email} · ${request.name}`,
