@@ -1,9 +1,21 @@
 import type { H3Event } from 'h3'
+import { createError } from 'h3'
 
 export function getDb(event: H3Event): D1Database {
   const db = (event.context.cloudflare?.env as { DB?: D1Database } | undefined)?.DB
-  if (!db) throw createError({ statusCode: 503, statusMessage: 'D1 no está configurada. Ejecuta la aplicación con Wrangler.' })
+  if (!db) throw createError({ statusCode: 503, statusMessage: 'Base de datos no disponible' })
   return db
+}
+
+export async function enableForeignKeys(event: H3Event) {
+  try {
+    const db = getDb(event)
+    await db.prepare('PRAGMA foreign_keys = ON').run()
+  } catch (error) {
+    // Log the actual error for internal debugging (in a real app, you'd use proper logging)
+    console.error('[Database Error] Failed to enable foreign keys:', error)
+    throw createError({ statusCode: 503, statusMessage: 'Error de configuración de base de datos' })
+  }
 }
 
 export function productFromRow(row: Record<string, unknown>) {
