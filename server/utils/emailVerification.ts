@@ -58,7 +58,9 @@ async function checkSPFRecord(domain: string): Promise<boolean> {
   try {
     const txtRecords = await dns.resolveTxt(domain);
     // Look for SPF record (starts with "v=spf1")
-    const spfRecord = txtRecords.flat().find((record) => record.startsWith('v=spf1'));
+    const spfRecord = txtRecords
+      .flat()
+      .find(record => record.startsWith('v=spf1'));
     return !!spfRecord;
   } catch (error) {
     return false;
@@ -72,7 +74,9 @@ async function checkDMARCRecord(domain: string): Promise<boolean> {
   try {
     const txtRecords = await dns.resolveTxt(`_dmarc.${domain}`);
     // Look for DMARC record (starts with "v=DMARC1")
-    const dmarcRecord = txtRecords.flat().find((record) => record.startsWith('v=DMARC1'));
+    const dmarcRecord = txtRecords
+      .flat()
+      .find(record => record.startsWith('v=DMARC1'));
     return !!dmarcRecord;
   } catch (error) {
     return false;
@@ -85,23 +89,28 @@ async function checkDMARCRecord(domain: string): Promise<boolean> {
  * 1. Check common DKIM selectors (default, google, etc.)
  * 2. Or use a dedicated email verification service
  */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 function checkDKIMRecord(domain: string): Promise<boolean> {
   // Placeholder implementation - in reality would check specific DKIM selectors
+  // In production, you would check common selectors like 'default', 'google', etc.
   return Promise.resolve(true);
 }
+/* eslint-enable @typescript-eslint/no-unused-vars */
 
 /**
  * Performs comprehensive email verification
  */
-export async function verifyEmailComprehensive(email: string): Promise<EmailVerificationResult> {
+export async function verifyEmailComprehensive(
+  email: string
+): Promise<EmailVerificationResult> {
   const errors: string[] = [];
-  
+
   // Validate syntax
   const hasValidSyntax = validateEmailSyntax(email);
   if (!hasValidSyntax) {
     errors.push('Invalid email format');
   }
-  
+
   // Extract domain
   const domain = extractDomain(email);
   if (!domain) {
@@ -114,37 +123,37 @@ export async function verifyEmailComprehensive(email: string): Promise<EmailVeri
       spfValid: false,
       dkimValid: false,
       dmarcValid: false,
-      errors
+      errors,
     };
   }
-  
+
   // Check domain existence
   const domainExists = await checkDomainExists(domain);
   if (!domainExists) {
     errors.push('Domain does not exist or has no DNS records');
   }
-  
+
   // Check SPF record
   const spfValid = await checkSPFRecord(domain);
   if (!spfValid) {
     errors.push('No valid SPF record found');
   }
-  
+
   // Check DMARC record
   const dmarcValid = await checkDMARCRecord(domain);
   if (!dmarcValid) {
     errors.push('No valid DMARC record found');
   }
-  
+
   // Check DKIM (placeholder)
   const dkimValid = await checkDKIMRecord(domain);
   if (!dkimValid) {
     errors.push('DKIM verification not implemented (placeholder)');
   }
-  
+
   // Overall validity - basic checks must pass
   const isValid = hasValidSyntax && domainExists && spfValid && dmarcValid;
-  
+
   return {
     isValid,
     domain,
@@ -153,7 +162,7 @@ export async function verifyEmailComprehensive(email: string): Promise<EmailVeri
     spfValid,
     dkimValid,
     dmarcValid,
-    errors
+    errors,
   };
 }
 
@@ -163,34 +172,36 @@ export async function verifyEmailComprehensive(email: string): Promise<EmailVeri
 export async function verifyEmailForRequest(event: H3Event) {
   // First verify Cloudflare Access
   const claims = await requireAccess(event);
-  
+
   // Get email from request body
   const body = await readBody<{ email: string }>(event);
   if (!body?.email) {
     throw createError({ statusCode: 400, statusMessage: 'Email is required' });
   }
-  
+
   // Perform enhanced email verification
-  const verificationResult = await verifyEmailComprehensive(body.email.trim().toLowerCase());
-  
+  const verificationResult = await verifyEmailComprehensive(
+    body.email.trim().toLowerCase()
+  );
+
   if (!verificationResult.isValid) {
     throw createError({
       statusCode: 400,
-      statusMessage: `Email verification failed: ${verificationResult.errors.join(', ')}`
+      statusMessage: `Email verification failed: ${verificationResult.errors.join(', ')}`,
     });
   }
-  
+
   // Additional domain restriction for superwagen.es
   if (!body.email.toLowerCase().endsWith('@superwagen.es')) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Only @superwagen.es email addresses are allowed'
+      statusMessage: 'Only @superwagen.es email addresses are allowed',
     });
   }
-  
+
   return {
     email: body.email.trim().toLowerCase(),
     claims,
-    verificationResult
+    verificationResult,
   };
 }

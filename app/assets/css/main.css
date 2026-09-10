@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&display=swap");
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&display=swap');
+@import 'tailwindcss';
 
 :root {
   --bg: #101215;
@@ -12,7 +12,7 @@
   --red: #e43b3b;
   --amber: #c6a76d;
   --green: #7ecb8e;
-  font-family: "Manrope", sans-serif;
+  font-family: 'Manrope', sans-serif;
   color: var(--text);
   background: var(--bg);
 }
@@ -139,7 +139,7 @@ button {
 }
 .nav-count {
   margin-left: auto;
-  font-family: "DM Mono", monospace;
+  font-family: 'DM Mono', monospace;
   color: #737a84;
   font-size: 10px;
 }
@@ -277,7 +277,7 @@ button {
 }
 .page-intro h1 {
   margin: 0;
-  font-family: "Barlow Condensed", sans-serif;
+  font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.01em;
@@ -356,7 +356,7 @@ button {
   color: var(--green);
   display: grid;
   place-items: center;
-  font-family: "DM Mono";
+  font-family: 'DM Mono';
   font-size: 11px;
 }
 .metric-icon--amber {
@@ -368,7 +368,7 @@ button {
   background: #422427;
 }
 .metric-number {
-  font-family: "Barlow Condensed", sans-serif;
+  font-family: 'Barlow Condensed', sans-serif;
   font-size: 52px;
   line-height: 0.98;
   letter-spacing: 0.02em;
@@ -511,7 +511,7 @@ button {
   background: #2a3038;
 }
 .filter-tabs b {
-  font-family: "DM Mono";
+  font-family: 'DM Mono';
   font-size: 9px;
   margin-left: 5px;
   color: #9da5ae;
@@ -584,7 +584,7 @@ button {
 }
 .code-cell {
   color: #858d97 !important;
-  font-family: "DM Mono", monospace;
+  font-family: 'DM Mono', monospace;
   font-size: 9px;
 }
 .stock-value {
@@ -592,7 +592,7 @@ button {
   align-items: center;
   gap: 7px;
   color: #d9dde0;
-  font-family: "DM Mono";
+  font-family: 'DM Mono';
 }
 .stock-value i {
   width: 6px;
@@ -608,14 +608,14 @@ button {
 }
 .incoming-value {
   color: var(--amber);
-  font-family: "DM Mono";
+  font-family: 'DM Mono';
 }
 .muted-cell {
   color: #696f78 !important;
 }
 .price-cell {
   color: #9ca4ae !important;
-  font-family: "DM Mono";
+  font-family: 'DM Mono';
 }
 .price-cell--strong {
   color: #d2d6da !important;
@@ -733,7 +733,7 @@ button {
   margin-top: 3px;
 }
 .activity-amount {
-  font-family: "DM Mono";
+  font-family: 'DM Mono';
   font-size: 10px;
 }
 .activity-amount--in {
@@ -744,7 +744,7 @@ button {
 }
 .activity-amount small {
   color: #77808a;
-  font-family: "Manrope";
+  font-family: 'Manrope';
   font-size: 8px;
 }
 .activity-row time {
@@ -767,7 +767,7 @@ button {
   font-size: 10px;
 }
 .coverage-label strong {
-  font-family: "DM Mono";
+  font-family: 'DM Mono';
   color: #d9dde0;
   font-size: 9px;
 }
@@ -831,7 +831,7 @@ button {
 }
 .drawer-header h2 {
   margin: 0;
-  font-family: "Barlow Condensed";
+  font-family: 'Barlow Condensed';
   text-transform: uppercase;
   font-size: 29px;
   letter-spacing: 0.02em;
@@ -897,7 +897,7 @@ button {
 }
 .selected-product span {
   color: #76808a;
-  font-family: "DM Mono";
+  font-family: 'DM Mono';
   font-size: 9px;
   margin-top: 4px;
 }
@@ -944,7 +944,7 @@ button {
   outline: none;
   width: 59px;
   text-align: center;
-  font-family: "DM Mono";
+  font-family: 'DM Mono';
 }
 .drawer-body textarea {
   width: 100%;
@@ -973,7 +973,7 @@ button {
 }
 .drawer-summary strong {
   color: #fff;
-  font-family: "DM Mono";
+  font-family: 'DM Mono';
 }
 .drawer-footer {
   border-top: 1px solid #2a3037;
@@ -1029,7 +1029,7 @@ button {
 .help-dialog__header h2 {
   max-width: 350px;
   margin: 0;
-  font-family: "Barlow Condensed", sans-serif;
+  font-family: 'Barlow Condensed', sans-serif;
   font-size: 31px;
   line-height: 0.98;
   letter-spacing: 0.01em;
@@ -1073,7 +1073,7 @@ button {
 }
 .help-topic__index {
   color: var(--red);
-  font-family: "DM Mono", monospace;
+  font-family: 'DM Mono', monospace;
   font-size: 10px;
   padding-top: 2px;
 }
@@ -1132,7 +1132,9 @@ button {
 }
 .help-enter-active .help-dialog,
 .help-leave-active .help-dialog {
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 .help-enter-from,
 .help-leave-to {
@@ -1199,7 +1201,7 @@ button {
 }
 .login-card h1 {
   margin: 0;
-  font-family: "Barlow Condensed";
+  font-family: 'Barlow Condensed';
   text-transform: uppercase;
   font-size: 57px;
   line-height: 0.88;
@@ -1263,7 +1265,7 @@ button {
   display: flex;
   justify-content: space-between;
   color: #5b636d;
-  font-family: "DM Mono";
+  font-family: 'DM Mono';
   font-size: 8px;
   letter-spacing: 0.12em;
 }
@@ -1322,7 +1324,7 @@ button {
 }
 .catalog-hero h1 {
   margin: 0;
-  font-family: "Barlow Condensed";
+  font-family: 'Barlow Condensed';
   text-transform: uppercase;
   font-size: 48px;
   line-height: 0.92;
@@ -1443,7 +1445,7 @@ button {
 }
 .product-visual span {
   color: #e0e2e2;
-  font-family: "Barlow Condensed";
+  font-family: 'Barlow Condensed';
   font-style: italic;
   font-size: 90px;
   line-height: 1;
@@ -1469,7 +1471,7 @@ button {
   display: flex;
   gap: 14px;
   color: #69727c;
-  font-family: "DM Mono";
+  font-family: 'DM Mono';
   font-size: 8px;
   margin-top: 8px;
 }
@@ -1559,7 +1561,7 @@ button {
 }
 .request-info span {
   color: #707985;
-  font-family: "DM Mono";
+  font-family: 'DM Mono';
   font-size: 8px;
   margin-top: 4px;
 }
@@ -1723,7 +1725,7 @@ button {
   display: flex;
   gap: 10px;
   color: #68727d;
-  font-family: "DM Mono";
+  font-family: 'DM Mono';
   font-size: 8px;
   margin-top: 8px;
 }
@@ -1734,7 +1736,7 @@ button {
 }
 .location-value {
   color: #929ca5 !important;
-  font-family: "DM Mono";
+  font-family: 'DM Mono';
   font-size: 9px;
 }
 .product-visual img {
@@ -1766,7 +1768,7 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 3px;
   padding: 5px 7px;
-  font-family: "Manrope";
+  font-family: 'Manrope';
   font-style: normal;
   font-size: 8px;
   opacity: 0;

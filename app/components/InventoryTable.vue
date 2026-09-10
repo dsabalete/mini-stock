@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import type { Product } from '../composables/useInventory'
-defineProps<{ products: Product[] }>()
-const emit = defineEmits<{ movement: [product: Product] }>()
-const formatCurrency = (value: number) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(value)
+import type { Product } from '../composables/useInventory';
+defineProps<{ products: Product[] }>();
+const emit = defineEmits<{ movement: [product: Product] }>();
+const formatCurrency = (value: number) =>
+  new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
+    value
+  );
 </script>
 
 <template>
@@ -25,25 +28,49 @@ const formatCurrency = (value: number) => new Intl.NumberFormat('es-ES', { style
       </thead>
       <tbody>
         <tr v-for="product in products" :key="product.id">
-          <td><span class="line-tag" :class="`line-tag--${product.accent}`">{{ product.line }}</span></td>
           <td>
-            <div class="product-name">{{ product.name }}</div><span v-if="product.locked" class="table-lock">▣ solicitud
-              bloqueada</span>
+            <span class="line-tag" :class="`line-tag--${product.accent}`">{{
+              product.line
+            }}</span>
+          </td>
+          <td>
+            <div class="product-name">{{ product.name }}</div>
+            <span v-if="product.locked" class="table-lock"
+              >▣ solicitud bloqueada</span
+            >
           </td>
           <td class="code-cell">{{ product.sku }}</td>
           <td class="code-cell">{{ product.ref }}</td>
-          <td class="numeric"><span class="stock-value" :class="`stock-value--${product.accent}`"><i></i>{{
-              product.stock }}</span></td>
+          <td class="numeric">
+            <span class="stock-value" :class="`stock-value--${product.accent}`"
+              ><i></i>{{ product.stock }}</span
+            >
+          </td>
           <td class="numeric location-value">{{ product.stockSC }}</td>
           <td class="numeric location-value">{{ product.stockSBD }}</td>
-          <td class="numeric"><span :class="{ 'incoming-value': product.incoming }">{{ product.incoming }}</span></td>
+          <td class="numeric">
+            <span :class="{ 'incoming-value': product.incoming }">{{
+              product.incoming
+            }}</span>
+          </td>
           <td class="numeric price-cell">{{ formatCurrency(product.cost) }}</td>
-          <td class="numeric price-cell price-cell--strong">{{ formatCurrency(product.price) }}</td>
-          <td><button class="row-action" :aria-label="`Registrar movimiento para ${product.name}`"
-              @click="emit('movement', product)">↗</button></td>
+          <td class="numeric price-cell price-cell--strong">
+            {{ formatCurrency(product.price) }}
+          </td>
+          <td>
+            <button
+              class="row-action"
+              :aria-label="`Registrar movimiento para ${product.name}`"
+              @click="emit('movement', product)"
+            >
+              ↗
+            </button>
+          </td>
         </tr>
         <tr v-if="products.length === 0">
-          <td colspan="11" class="empty-state">No hay referencias que coincidan con tu búsqueda.</td>
+          <td colspan="11" class="empty-state">
+            No hay referencias que coincidan con tu búsqueda.
+          </td>
         </tr>
       </tbody>
     </table>
