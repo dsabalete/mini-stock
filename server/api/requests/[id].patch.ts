@@ -11,10 +11,12 @@ export default defineEventHandler(async (event) => {
   if (body.decision === 'approved') { const fromSC = Math.min(sc, Number(request.quantity)); sc -= fromSC; sbd = Math.max(0, sbd - (Number(request.quantity) - fromSC)) }
   const now = new Date().toISOString(); const type = body.decision === 'approved' ? 'out' : 'in'
   const movementTitle = body.decision === 'approved' ? 'Pedido aprobado' : 'Solicitud rechazada'
-  await db.batch([
-    db.prepare('UPDATE order_requests SET status = ? WHERE id = ?').bind(body.decision, id),
-    db.prepare('UPDATE products SET stock_sc = ?, stock_sbd = ?, locked = 0 WHERE id = ?').bind(sc, sbd, request.product_id),
-    db.prepare('INSERT INTO movements (title, detail, amount, type, created_at) VALUES (?, ?, ?, ?, ?)').bind(movementTitle, `${request.email} · ${request.name}`, request.quantity, type, now),
-  ])
+  await db.transaction(async (tx) => {
+    await tx.batch([
+      db.prepare('UPDATE order_requests SET status = ? WHERE id = ?').bind(body.decision, id),
+      db.prepare('UPDATE products SET stock_sc = ?, stock_sbd = ?, locked = 0 WHERE id = ?').bind(sc, sbd, request.product_id),
+      db.prepare('INSERT INTO movements (title, detail, amount, type, created_at) VALUES (?, ?, ?, ?, ?)').bind(movementTitle, `${request.email} · ${request.name}`, request.quantity, type, now),
+    ])
+});
   return { product: productFromRow({ ...request, stock_sc: sc, stock_sbd: sbd }), movement: { title: movementTitle, detail: `${request.email} · ${request.name}`, amount: Number(request.quantity), type, time: now } }
 })

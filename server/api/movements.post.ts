@@ -10,9 +10,11 @@ export default defineEventHandler(async (event) => {
   const current = Number(row[column])
   const next = body.type === 'in' ? current + body.quantity : Math.max(0, current - body.quantity)
   const now = new Date().toISOString()
-  await db.batch([
-    db.prepare(`UPDATE products SET ${column} = ? WHERE id = ?`).bind(next, body.productId),
-    db.prepare('INSERT INTO movements (title, detail, amount, type, created_at) VALUES (?, ?, ?, ?, ?)').bind(`${body.type === 'in' ? 'Entrada' : 'Despacho'} en ${body.location}`, body.note || row.name, body.quantity, body.type, now),
-  ])
+  await db.transaction(async (tx) => {
+    await tx.batch([
+      db.prepare(`UPDATE products SET ${column} = ? WHERE id = ?`).bind(next, body.productId),
+      db.prepare('INSERT INTO movements (title, detail, amount, type, created_at) VALUES (?, ?, ?, ?, ?)').bind(`${body.type === 'in' ? 'Entrada' : 'Despacho'} en ${body.location}`, body.note || row.name, body.quantity, body.type, now),
+    ])
+});
   return { product: productFromRow({ ...row, [column]: next }), movement: { title: `${body.type === 'in' ? 'Entrada' : 'Despacho'} en ${body.location}`, detail: body.note || row.name, amount: body.quantity, type: body.type, time: now } }
 })

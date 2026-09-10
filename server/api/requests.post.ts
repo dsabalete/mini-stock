@@ -1,3 +1,4 @@
+
 import { getDb } from '../utils/db'
 
 export default defineEventHandler(async (event) => {
@@ -9,10 +10,12 @@ export default defineEventHandler(async (event) => {
   if (Boolean(product.locked) || Number(product.stock_sc) + Number(product.stock_sbd) < body.quantity) throw createError({ statusCode: 409, statusMessage: 'Producto no disponible' })
   const id = Date.now()
   const now = new Date().toISOString()
-  await db.batch([
-    db.prepare('UPDATE products SET locked = 1 WHERE id = ?').bind(body.productId),
-    db.prepare('INSERT INTO order_requests (id, product_id, email, quantity, status, created_at) VALUES (?, ?, ?, ?, ?, ?)').bind(id, body.productId, body.email.trim().toLowerCase(), body.quantity, 'pending', now),
-    db.prepare('INSERT INTO movements (title, detail, amount, type, created_at) VALUES (?, ?, ?, ?, ?)').bind('Solicitud de usuario', `${body.email} · ${product.name}`, body.quantity, 'out', now),
-  ])
+  await db.transaction(async (tx) => {
+    await tx.batch([
+      db.prepare('UPDATE products SET locked = 1 WHERE id = ?').bind(body.productId),
+      db.prepare('INSERT INTO order_requests (id, product_id, email, quantity, status, created_at) VALUES (?, ?, ?, ?, ?, ?)').bind(id, body.productId, body.email.trim().toLowerCase(), body.quantity, 'pending', now),
+      db.prepare('INSERT INTO movements (title, detail, amount, type, created_at) VALUES (?, ?, ?, ?, ?)').bind('Solicitud de usuario', `${body.email} · ${product.name}`, body.quantity, 'out', now),
+    ]);
+  });
   return { id }
 })
