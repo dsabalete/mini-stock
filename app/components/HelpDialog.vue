@@ -1,40 +1,40 @@
 <script setup lang="ts">
-import { nextTick, onBeforeUnmount, watch, useTemplateRef } from 'vue';
+import { nextTick, onBeforeUnmount, watch, useTemplateRef } from 'vue'
 
 const props = defineProps<{
-  open: boolean;
-}>();
+  open: boolean
+}>()
 
 const emit = defineEmits<{
-  close: [];
-}>();
+  close: []
+}>()
 
-const closeButton = useTemplateRef<HTMLButtonElement>('closeButton');
+const closeButton = useTemplateRef<HTMLButtonElement>('closeButton')
 
 function close() {
-  emit('close');
+  emit('close')
 }
 
 function onKeydown(event: KeyboardEvent) {
-  if (event.key === 'Escape') close();
+  if (event.key === 'Escape') close()
 }
 
 watch(
   () => props.open,
-  async isOpen => {
+  async (isOpen) => {
     if (isOpen) {
-      document.addEventListener('keydown', onKeydown);
-      await nextTick();
-      closeButton.value?.focus();
+      document.addEventListener('keydown', onKeydown)
+      await nextTick()
+      closeButton.value?.focus()
     } else {
-      document.removeEventListener('keydown', onKeydown);
+      document.removeEventListener('keydown', onKeydown)
     }
   }
-);
+)
 
 onBeforeUnmount(() => {
-  document.removeEventListener('keydown', onKeydown);
-});
+  document.removeEventListener('keydown', onKeydown)
+})
 </script>
 
 <template>

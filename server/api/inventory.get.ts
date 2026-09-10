@@ -1,7 +1,7 @@
-import { getDb, productFromRow } from '../utils/db';
+import { getDb, productFromRow } from '../utils/db'
 
-export default defineEventHandler(async event => {
-  const db = getDb(event);
+export default defineEventHandler(async (event) => {
+  const db = getDb(event)
   const [products, requests, movements] = await Promise.all([
     db.prepare('SELECT * FROM products ORDER BY id').all(),
     db
@@ -12,9 +12,9 @@ export default defineEventHandler(async event => {
     db
       .prepare('SELECT * FROM movements ORDER BY created_at DESC LIMIT 50')
       .all(),
-  ]);
+  ])
   return {
-    products: products.results.map(row =>
+    products: products.results.map((row) =>
       productFromRow(row as Record<string, unknown>)
     ),
     requests: requests.results.map((row: Record<string, unknown>) => ({
@@ -35,5 +35,5 @@ export default defineEventHandler(async event => {
       type: row.type,
       time: row.created_at,
     })),
-  };
-});
+  }
+})

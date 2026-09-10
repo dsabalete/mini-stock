@@ -1,37 +1,37 @@
-import { getDb, productFromRow } from '../../utils/db';
-import { logAudit } from '../../utils/audit';
-import { requireAccess } from '../../utils/access';
+import { getDb, productFromRow } from '../../utils/db'
+import { logAudit } from '../../utils/audit'
+import { requireAccess } from '../../utils/access'
 
-export default defineEventHandler(async event => {
-  const claims = await requireAccess(event);
-  const adminEmail = claims.email || 'unknown@superwagen.es';
-  const id = Number(getRouterParam(event, 'id'));
-  const body = await readBody<{ decision: 'approved' | 'rejected' }>(event);
+export default defineEventHandler(async (event) => {
+  const claims = await requireAccess(event)
+  const adminEmail = claims.email || 'unknown@superwagen.es'
+  const id = Number(getRouterParam(event, 'id'))
+  const body = await readBody<{ decision: 'approved' | 'rejected' }>(event)
   if (!id || !['approved', 'rejected'].includes(body?.decision))
-    throw createError({ statusCode: 400, statusMessage: 'Decisión inválida' });
-  const db = getDb(event);
+    throw createError({ statusCode: 400, statusMessage: 'Decisión inválida' })
+  const db = getDb(event)
   const request = await db
     .prepare(
       `SELECT r.*, p.name, p.stock_sc, p.stock_sbd, p.locked FROM order_requests r JOIN products p ON p.id = r.product_id WHERE r.id = ?`
     )
     .bind(id)
-    .first<Record<string, unknown>>();
+    .first<Record<string, unknown>>()
   if (!request || request.status !== 'pending')
     throw createError({
       statusCode: 404,
       statusMessage: 'Solicitud no encontrada o ya gestionada',
-    });
-  let sc = Number(request.stock_sc);
-  let sbd = Number(request.stock_sbd);
+    })
+  let sc = Number(request.stock_sc)
+  let sbd = Number(request.stock_sbd)
   if (body.decision === 'approved') {
-    const fromSC = Math.min(sc, Number(request.quantity));
-    sc -= fromSC;
-    sbd = Math.max(0, sbd - (Number(request.quantity) - fromSC));
+    const fromSC = Math.min(sc, Number(request.quantity))
+    sc -= fromSC
+    sbd = Math.max(0, sbd - (Number(request.quantity) - fromSC))
   }
-  const now = new Date().toISOString();
-  const type = body.decision === 'approved' ? 'out' : 'in';
+  const now = new Date().toISOString()
+  const type = body.decision === 'approved' ? 'out' : 'in'
   const movementTitle =
-    body.decision === 'approved' ? 'Pedido aprobado' : 'Solicitud rechazada';
+    body.decision === 'approved' ? 'Pedido aprobado' : 'Solicitud rechazada'
   await db.batch([
     db
       .prepare('UPDATE order_requests SET status = ? WHERE id = ?')
@@ -52,7 +52,7 @@ export default defineEventHandler(async event => {
         type,
         now
       ),
-  ]);
+  ])
   await logAudit(event, {
     action: `request_${body.decision}`,
     entityType: 'request',
@@ -66,7 +66,7 @@ export default defineEventHandler(async event => {
       requesterEmail: request.email,
       decision: body.decision,
     },
-  });
+  })
   return {
     product: productFromRow({ ...request, stock_sc: sc, stock_sbd: sbd }),
     movement: {
@@ -76,5 +76,5 @@ export default defineEventHandler(async event => {
       type,
       time: now,
     },
-  };
-});
+  }
+})

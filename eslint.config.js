@@ -1,10 +1,10 @@
-import js from '@eslint/js';
-import globals from 'globals';
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
-import typescriptParser from '@typescript-eslint/parser';
-import vue from 'eslint-plugin-vue';
-import vueEslintParser from 'vue-eslint-parser';
-import prettier from 'eslint-plugin-prettier';
+import js from '@eslint/js'
+import globals from 'globals'
+import typescriptEslint from '@typescript-eslint/eslint-plugin'
+import typescriptParser from '@typescript-eslint/parser'
+import vue from 'eslint-plugin-vue'
+import vueEslintParser from 'vue-eslint-parser'
+import prettier from 'eslint-plugin-prettier'
 
 export default [
   {
@@ -112,4 +112,4 @@ export default [
       parser: typescriptParser,
     },
   },
-];
+]

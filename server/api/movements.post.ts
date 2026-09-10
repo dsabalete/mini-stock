@@ -1,17 +1,17 @@
-import { getDb, productFromRow } from '../utils/db';
-import { logAudit } from '../utils/audit';
-import { requireAccess } from '../utils/access';
+import { getDb, productFromRow } from '../utils/db'
+import { logAudit } from '../utils/audit'
+import { requireAccess } from '../utils/access'
 
-export default defineEventHandler(async event => {
-  const claims = await requireAccess(event);
-  const adminEmail = claims.email || 'unknown@superwagen.es';
+export default defineEventHandler(async (event) => {
+  const claims = await requireAccess(event)
+  const adminEmail = claims.email || 'unknown@superwagen.es'
   const body = await readBody<{
-    productId: number;
-    type: 'in' | 'out';
-    quantity: number;
-    location: 'SC' | 'SBD';
-    note?: string;
-  }>(event);
+    productId: number
+    type: 'in' | 'out'
+    quantity: number
+    location: 'SC' | 'SBD'
+    note?: string
+  }>(event)
   if (
     !body?.productId ||
     !['in', 'out'].includes(body.type) ||
@@ -22,24 +22,24 @@ export default defineEventHandler(async event => {
     throw createError({
       statusCode: 400,
       statusMessage: 'Movimiento inválido',
-    });
-  const db = getDb(event);
-  const column = body.location === 'SC' ? 'stock_sc' : 'stock_sbd';
+    })
+  const db = getDb(event)
+  const column = body.location === 'SC' ? 'stock_sc' : 'stock_sbd'
   const row = await db
     .prepare('SELECT * FROM products WHERE id = ?')
     .bind(body.productId)
-    .first<Record<string, unknown>>();
+    .first<Record<string, unknown>>()
   if (!row)
     throw createError({
       statusCode: 404,
       statusMessage: 'Producto no encontrado',
-    });
-  const current = Number(row[column]);
+    })
+  const current = Number(row[column])
   const next =
     body.type === 'in'
       ? current + body.quantity
-      : Math.max(0, current - body.quantity);
-  const now = new Date().toISOString();
+      : Math.max(0, current - body.quantity)
+  const now = new Date().toISOString()
   await db.batch([
     db
       .prepare(`UPDATE products SET ${column} = ? WHERE id = ?`)
@@ -55,7 +55,7 @@ export default defineEventHandler(async event => {
         body.type,
         now
       ),
-  ]);
+  ])
   await logAudit(event, {
     action: `stock_movement_${body.type}`,
     entityType: 'product',
@@ -70,7 +70,7 @@ export default defineEventHandler(async event => {
       note: body.note,
       movementType: body.type === 'in' ? 'entrada' : 'despacho',
     },
-  });
+  })
   return {
     product: productFromRow({ ...row, [column]: next }),
     movement: {
@@ -80,5 +80,5 @@ export default defineEventHandler(async event => {
       type: body.type,
       time: now,
     },
-  };
-});
+  }
+})

@@ -1,26 +1,26 @@
-import { getDb } from '../utils/db';
-import { logAudit } from '../utils/audit';
-import { verifyEmailForRequest } from '../utils/emailVerification';
+import { getDb } from '../utils/db'
+import { logAudit } from '../utils/audit'
+import { verifyEmailForRequest } from '../utils/emailVerification'
 
-export default defineEventHandler(async event => {
-  await verifyEmailForRequest(event);
+export default defineEventHandler(async (event) => {
+  await verifyEmailForRequest(event)
   const body = await readBody<{
-    email: string;
-    productId: number;
-    quantity: number;
-  }>(event);
+    email: string
+    productId: number
+    quantity: number
+  }>(event)
   if (!body?.email || !Number.isInteger(body.quantity) || body.quantity <= 0)
-    throw createError({ statusCode: 400, statusMessage: 'Solicitud inválida' });
-  const db = getDb(event);
+    throw createError({ statusCode: 400, statusMessage: 'Solicitud inválida' })
+  const db = getDb(event)
   const product = await db
     .prepare('SELECT * FROM products WHERE id = ?')
     .bind(body.productId)
-    .first<Record<string, unknown>>();
+    .first<Record<string, unknown>>()
   if (!product)
     throw createError({
       statusCode: 404,
       statusMessage: 'Producto no encontrado',
-    });
+    })
   if (
     Boolean(product.locked) ||
     Number(product.stock_sc) + Number(product.stock_sbd) < body.quantity
@@ -28,9 +28,9 @@ export default defineEventHandler(async event => {
     throw createError({
       statusCode: 409,
       statusMessage: 'Producto no disponible',
-    });
-  const id = crypto.randomUUID();
-  const now = new Date().toISOString();
+    })
+  const id = crypto.randomUUID()
+  const now = new Date().toISOString()
   await db.batch([
     db
       .prepare('UPDATE products SET locked = 1 WHERE id = ?')
@@ -58,7 +58,7 @@ export default defineEventHandler(async event => {
         'out',
         now
       ),
-  ]);
+  ])
   await logAudit(event, {
     action: 'request_created',
     entityType: 'request',
@@ -70,6 +70,6 @@ export default defineEventHandler(async event => {
       productName: product.name,
       quantity: body.quantity,
     },
-  });
-  return { id };
-});
+  })
+  return { id }
+})

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { OrderRequest } from '../composables/useInventory';
-defineProps<{ requests: OrderRequest[] }>();
+import type { OrderRequest } from '../composables/useInventory'
+defineProps<{ requests: OrderRequest[] }>()
 const emit = defineEmits<{
-  manage: [requestId: number, decision: 'approved' | 'rejected'];
-}>();
+  manage: [requestId: number, decision: 'approved' | 'rejected']
+}>()
 </script>
 
 <template>
@@ -17,11 +17,11 @@ const emit = defineEmits<{
       <span class="admin-lock">▣ Solo administrador</span>
     </div>
     <div
-      v-if="requests.filter(request => request.status === 'pending').length"
+      v-if="requests.filter((request) => request.status === 'pending').length"
       class="request-list"
     >
       <article
-        v-for="request in requests.filter(item => item.status === 'pending')"
+        v-for="request in requests.filter((item) => item.status === 'pending')"
         :key="request.id"
         class="request-row"
       >

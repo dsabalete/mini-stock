@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { Product } from '../composables/useInventory';
-defineProps<{ products: Product[] }>();
-const emit = defineEmits<{ movement: [product: Product] }>();
+import type { Product } from '../composables/useInventory'
+defineProps<{ products: Product[] }>()
+const emit = defineEmits<{ movement: [product: Product] }>()
 const formatCurrency = (value: number) =>
   new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
     value
-  );
+  )
 </script>
 
 <template>

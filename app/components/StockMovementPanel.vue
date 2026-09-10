@@ -1,37 +1,37 @@
 <script setup lang="ts">
-import { computed, shallowRef, watch } from 'vue';
-import type { Product } from '../composables/useInventory';
-const props = defineProps<{ open: boolean; product: Product | null }>();
+import { computed, shallowRef, watch } from 'vue'
+import type { Product } from '../composables/useInventory'
+const props = defineProps<{ open: boolean; product: Product | null }>()
 const emit = defineEmits<{
-  close: [];
+  close: []
   save: [
     payload: {
-      productId: number;
-      type: 'in' | 'out';
-      quantity: number;
-      location: 'SC' | 'SBD';
-      note: string;
+      productId: number
+      type: 'in' | 'out'
+      quantity: number
+      location: 'SC' | 'SBD'
+      note: string
     },
-  ];
-}>();
-const type = shallowRef<'in' | 'out'>('in');
-const location = shallowRef<'SC' | 'SBD'>('SC');
-const quantity = shallowRef(1);
-const note = shallowRef('');
+  ]
+}>()
+const type = shallowRef<'in' | 'out'>('in')
+const location = shallowRef<'SC' | 'SBD'>('SC')
+const quantity = shallowRef(1)
+const note = shallowRef('')
 watch(
   () => props.open,
-  open => {
+  (open) => {
     if (open) {
-      type.value = 'in';
-      location.value = 'SC';
-      quantity.value = 1;
-      note.value = '';
+      type.value = 'in'
+      location.value = 'SC'
+      quantity.value = 1
+      note.value = ''
     }
   }
-);
+)
 const selectedName = computed(
   () => props.product?.name ?? 'Selecciona una referencia'
-);
+)
 function save() {
   if (props.product && quantity.value > 0)
     emit('save', {
@@ -40,7 +40,7 @@ function save() {
       quantity: quantity.value,
       location: location.value,
       note: note.value,
-    });
+    })
 }
 </script>
 

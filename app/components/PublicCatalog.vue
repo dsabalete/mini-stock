@@ -1,43 +1,43 @@
 <script setup lang="ts">
-import { computed, reactive, shallowRef, watch } from 'vue';
-import type { Product } from '../composables/useInventory';
+import { computed, reactive, shallowRef, watch } from 'vue'
+import type { Product } from '../composables/useInventory'
 
-const props = defineProps<{ products: Product[]; email: string }>();
-const emit = defineEmits<{ request: [productId: number, quantity: number] }>();
-const search = shallowRef('');
-const selectedLine = shallowRef('ALL');
-const quantity = reactive<Record<number, number>>({});
-const zoomedProduct = shallowRef<Product | null>(null);
+const props = defineProps<{ products: Product[]; email: string }>()
+const emit = defineEmits<{ request: [productId: number, quantity: number] }>()
+const search = shallowRef('')
+const selectedLine = shallowRef('ALL')
+const quantity = reactive<Record<number, number>>({})
+const zoomedProduct = shallowRef<Product | null>(null)
 watch(
   () => props.products,
-  products => {
-    products.forEach(product => {
-      if (quantity[product.id] === undefined) quantity[product.id] = 0;
-    });
+  (products) => {
+    products.forEach((product) => {
+      if (quantity[product.id] === undefined) quantity[product.id] = 0
+    })
   },
   { immediate: true }
-);
+)
 const visibleProducts = computed(() =>
-  props.products.filter(product => {
-    const query = search.value.toLowerCase();
+  props.products.filter((product) => {
+    const query = search.value.toLowerCase()
     return (
       (!query ||
         `${product.name} ${product.sku} ${product.ref}`
           .toLowerCase()
           .includes(query)) &&
       (selectedLine.value === 'ALL' || product.line === selectedLine.value)
-    );
+    )
   })
-);
+)
 const lines = computed(() => [
   'ALL',
-  ...new Set(props.products.map(product => product.line)),
-]);
+  ...new Set(props.products.map((product) => product.line)),
+])
 function getQuantity(productId: number) {
-  return quantity[productId] ?? 0;
+  return quantity[productId] ?? 0
 }
 function request(product: Product) {
-  emit('request', product.id, getQuantity(product.id));
+  emit('request', product.id, getQuantity(product.id))
 }
 </script>
 

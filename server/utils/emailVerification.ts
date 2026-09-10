@@ -1,36 +1,36 @@
-import dns from 'dns/promises';
-import type { H3Event } from 'h3';
-import { requireAccess } from './access.ts';
-import { readBody } from 'h3';
-import { createError } from 'h3';
+import dns from 'dns/promises'
+import type { H3Event } from 'h3'
+import { requireAccess } from './access.ts'
+import { readBody } from 'h3'
+import { createError } from 'h3'
 
 /**
  * Enhanced email verification that checks domain validity and email authentication records
  */
 export interface EmailVerificationResult {
-  isValid: boolean;
-  domain: string;
-  hasValidSyntax: boolean;
-  domainExists: boolean;
-  spfValid: boolean;
-  dkimValid: boolean;
-  dmarcValid: boolean;
-  errors: string[];
+  isValid: boolean
+  domain: string
+  hasValidSyntax: boolean
+  domainExists: boolean
+  spfValid: boolean
+  dkimValid: boolean
+  dmarcValid: boolean
+  errors: string[]
 }
 
 /**
  * Validates email syntax
  */
 function validateEmailSyntax(email: string): boolean {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
 }
 
 /**
  * Extracts domain from email address
  */
 function extractDomain(email: string): string {
-  return email.split('@')[1]?.toLowerCase() || '';
+  return email.split('@')[1]?.toLowerCase() || ''
 }
 
 /**
@@ -38,15 +38,15 @@ function extractDomain(email: string): string {
  */
 async function checkDomainExists(domain: string): Promise<boolean> {
   try {
-    const mxRecords = await dns.resolveMx(domain);
-    return mxRecords.length > 0;
+    const mxRecords = await dns.resolveMx(domain)
+    return mxRecords.length > 0
   } catch {
     // If MX records don't exist, try A records as fallback
     try {
-      await dns.resolve4(domain);
-      return true;
+      await dns.resolve4(domain)
+      return true
     } catch {
-      return false;
+      return false
     }
   }
 }
@@ -56,14 +56,14 @@ async function checkDomainExists(domain: string): Promise<boolean> {
  */
 async function checkSPFRecord(domain: string): Promise<boolean> {
   try {
-    const txtRecords = await dns.resolveTxt(domain);
+    const txtRecords = await dns.resolveTxt(domain)
     // Look for SPF record (starts with "v=spf1")
     const spfRecord = txtRecords
       .flat()
-      .find(record => record.startsWith('v=spf1'));
-    return !!spfRecord;
+      .find((record) => record.startsWith('v=spf1'))
+    return !!spfRecord
   } catch {
-    return false;
+    return false
   }
 }
 
@@ -72,14 +72,14 @@ async function checkSPFRecord(domain: string): Promise<boolean> {
  */
 async function checkDMARCRecord(domain: string): Promise<boolean> {
   try {
-    const txtRecords = await dns.resolveTxt(`_dmarc.${domain}`);
+    const txtRecords = await dns.resolveTxt(`_dmarc.${domain}`)
     // Look for DMARC record (starts with "v=DMARC1")
     const dmarcRecord = txtRecords
       .flat()
-      .find(record => record.startsWith('v=DMARC1'));
-    return !!dmarcRecord;
+      .find((record) => record.startsWith('v=DMARC1'))
+    return !!dmarcRecord
   } catch {
-    return false;
+    return false
   }
 }
 
@@ -92,7 +92,7 @@ async function checkDMARCRecord(domain: string): Promise<boolean> {
 function checkDKIMRecord(_domain: string): Promise<boolean> {
   // Placeholder implementation - in reality would check specific DKIM selectors
   // In production, you would check common selectors like 'default', 'google', etc.
-  return Promise.resolve(true);
+  return Promise.resolve(true)
 }
 
 /**
@@ -101,18 +101,18 @@ function checkDKIMRecord(_domain: string): Promise<boolean> {
 export async function verifyEmailComprehensive(
   email: string
 ): Promise<EmailVerificationResult> {
-  const errors: string[] = [];
+  const errors: string[] = []
 
   // Validate syntax
-  const hasValidSyntax = validateEmailSyntax(email);
+  const hasValidSyntax = validateEmailSyntax(email)
   if (!hasValidSyntax) {
-    errors.push('Invalid email format');
+    errors.push('Invalid email format')
   }
 
   // Extract domain
-  const domain = extractDomain(email);
+  const domain = extractDomain(email)
   if (!domain) {
-    errors.push('Could not extract domain from email');
+    errors.push('Could not extract domain from email')
     return {
       isValid: false,
       domain: '',
@@ -122,35 +122,35 @@ export async function verifyEmailComprehensive(
       dkimValid: false,
       dmarcValid: false,
       errors,
-    };
+    }
   }
 
   // Check domain existence
-  const domainExists = await checkDomainExists(domain);
+  const domainExists = await checkDomainExists(domain)
   if (!domainExists) {
-    errors.push('Domain does not exist or has no DNS records');
+    errors.push('Domain does not exist or has no DNS records')
   }
 
   // Check SPF record
-  const spfValid = await checkSPFRecord(domain);
+  const spfValid = await checkSPFRecord(domain)
   if (!spfValid) {
-    errors.push('No valid SPF record found');
+    errors.push('No valid SPF record found')
   }
 
   // Check DMARC record
-  const dmarcValid = await checkDMARCRecord(domain);
+  const dmarcValid = await checkDMARCRecord(domain)
   if (!dmarcValid) {
-    errors.push('No valid DMARC record found');
+    errors.push('No valid DMARC record found')
   }
 
   // Check DKIM (placeholder)
-  const dkimValid = await checkDKIMRecord(domain);
+  const dkimValid = await checkDKIMRecord(domain)
   if (!dkimValid) {
-    errors.push('DKIM verification not implemented (placeholder)');
+    errors.push('DKIM verification not implemented (placeholder)')
   }
 
   // Overall validity - basic checks must pass
-  const isValid = hasValidSyntax && domainExists && spfValid && dmarcValid;
+  const isValid = hasValidSyntax && domainExists && spfValid && dmarcValid
 
   return {
     isValid,
@@ -161,7 +161,7 @@ export async function verifyEmailComprehensive(
     dkimValid,
     dmarcValid,
     errors,
-  };
+  }
 }
 
 /**
@@ -169,24 +169,24 @@ export async function verifyEmailComprehensive(
  */
 export async function verifyEmailForRequest(event: H3Event) {
   // First verify Cloudflare Access
-  const claims = await requireAccess(event);
+  const claims = await requireAccess(event)
 
   // Get email from request body
-  const body = await readBody<{ email: string }>(event);
+  const body = await readBody<{ email: string }>(event)
   if (!body?.email) {
-    throw createError({ statusCode: 400, statusMessage: 'Email is required' });
+    throw createError({ statusCode: 400, statusMessage: 'Email is required' })
   }
 
   // Perform enhanced email verification
   const verificationResult = await verifyEmailComprehensive(
     body.email.trim().toLowerCase()
-  );
+  )
 
   if (!verificationResult.isValid) {
     throw createError({
       statusCode: 400,
       statusMessage: `Email verification failed: ${verificationResult.errors.join(', ')}`,
-    });
+    })
   }
 
   // Additional domain restriction for superwagen.es
@@ -194,12 +194,12 @@ export async function verifyEmailForRequest(event: H3Event) {
     throw createError({
       statusCode: 400,
       statusMessage: 'Only @superwagen.es email addresses are allowed',
-    });
+    })
   }
 
   return {
     email: body.email.trim().toLowerCase(),
     claims,
     verificationResult,
-  };
+  }
 }

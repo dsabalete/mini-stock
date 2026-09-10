@@ -1,15 +1,15 @@
-import { getHeader, H3Event } from 'h3';
-import { getDb } from './db';
+import { getHeader, H3Event } from 'h3'
+import { getDb } from './db'
 
 export interface AuditLogEntry {
-  action: string;
-  entityType: 'product' | 'request' | 'movement';
-  entityId: number | string;
-  userEmail: string;
-  userRole: 'user' | 'admin';
-  details: Record<string, unknown>;
-  timestamp: string;
-  ipAddress?: string;
+  action: string
+  entityType: 'product' | 'request' | 'movement'
+  entityId: number | string
+  userEmail: string
+  userRole: 'user' | 'admin'
+  details: Record<string, unknown>
+  timestamp: string
+  ipAddress?: string
 }
 
 export async function logAudit(
@@ -17,8 +17,8 @@ export async function logAudit(
   entry: Omit<AuditLogEntry, 'timestamp' | 'ipAddress'>
 ) {
   try {
-    const db = getDb(event);
-    const ip = getClientIP(event);
+    const db = getDb(event)
+    const ip = getClientIP(event)
     await db
       .prepare(
         `INSERT INTO audit_log (action, entity_type, entity_id, user_email, user_role, details, ip_address, created_at)
@@ -34,16 +34,16 @@ export async function logAudit(
         ip,
         new Date().toISOString()
       )
-      .run();
+      .run()
   } catch {
-    console.error('Failed to write audit log', entry);
+    console.error('Failed to write audit log', entry)
   }
 }
 
 function getClientIP(event: H3Event): string {
-  const forwarded = getHeader(event, 'cf-connecting-ip');
-  if (forwarded) return forwarded;
-  const xff = getHeader(event, 'x-forwarded-for');
-  if (xff) return xff.split(',')[0].trim();
-  return getHeader(event, 'x-real-ip') || 'unknown';
+  const forwarded = getHeader(event, 'cf-connecting-ip')
+  if (forwarded) return forwarded
+  const xff = getHeader(event, 'x-forwarded-for')
+  if (xff) return xff.split(',')[0].trim()
+  return getHeader(event, 'x-real-ip') || 'unknown'
 }
