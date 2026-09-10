@@ -6,6 +6,7 @@ pages_build_output_dir = "dist"
 
 [vars]
 ACCESS_ALLOW_INSECURE_LOCAL = "true"
+ADMIN_EMAIL = "admin@superwagen.es"
 
 [[d1_databases]]
 binding = "DB"

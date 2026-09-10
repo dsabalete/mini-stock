@@ -7,6 +7,7 @@ type AccessEnv = {
   ACCESS_TEAM_DOMAIN?: string
   ACCESS_AUD?: string
   ACCESS_ALLOW_INSECURE_LOCAL?: string
+  ADMIN_EMAIL?: string
 }
 type AccessClaims = {
   iss?: string
@@ -140,6 +141,22 @@ export async function requireAccess(event: H3Event) {
       statusMessage: 'Token de Cloudflare Access inválido o caducado',
     })
   }
+}
+
+export async function requireAdmin(event: H3Event) {
+  const claims = await requireAccess(event)
+  const env = getAccessEnv(event)
+  if (env.ACCESS_ALLOW_INSECURE_LOCAL === 'true') return claims
+  const adminEmail = env.ADMIN_EMAIL?.trim().toLowerCase()
+  const userEmail = claims.email?.trim().toLowerCase()
+
+  if (!adminEmail || !userEmail || userEmail !== adminEmail)
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'Solo el administrador puede gestionar productos',
+    })
+
+  return claims
 }
 
 /**

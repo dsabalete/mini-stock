@@ -866,6 +866,61 @@ button {
   letter-spacing: 0;
   font-weight: 400;
 }
+.product-management {
+  margin-top: 8px;
+}
+.product-management > .panel-heading p:not(.eyebrow) {
+  color: #858e97;
+  font-size: 11px;
+  margin: 8px 0 0;
+}
+.product-form {
+  padding: 25px 29px 29px;
+  border-top: 1px solid #2a3037;
+}
+.product-form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px 14px;
+}
+.form-field {
+  display: block;
+}
+.form-field--wide {
+  grid-column: span 2;
+}
+.form-field input,
+.form-field select {
+  width: 100%;
+  height: 40px;
+  color: #eef0f1;
+  background: #101317;
+  border: 1px solid #414851;
+  border-radius: 4px;
+  padding: 0 11px;
+  outline: none;
+  font-size: 11px;
+}
+.form-field input:focus,
+.form-field select:focus {
+  border-color: var(--red);
+}
+.form-field input::placeholder {
+  color: #646d77;
+}
+.product-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 26px;
+}
+@media (max-width: 760px) {
+  .product-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .form-field--wide {
+    grid-column: auto;
+  }
+}
 .selected-product {
   background: #21262d;
   border: 1px solid #343b43;

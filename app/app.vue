@@ -2,6 +2,8 @@
 import { computed, onMounted, shallowRef } from 'vue'
 import { useInventory } from './composables/useInventory'
 import HelpDialog from './components/HelpDialog.vue'
+import ProductManagement from './components/ProductManagement.vue'
+import type { NewProductPayload } from './components/ProductForm.vue'
 
 const runtimeConfig = useRuntimeConfig()
 const {
@@ -13,6 +15,7 @@ const {
   openMovement,
   closeMovement,
   recordMovement,
+  createProduct,
   metrics,
   recentMovements,
   movementOpen,
@@ -24,10 +27,11 @@ const {
 } = useInventory()
 const email = shallowRef('')
 const sessionEmail = shallowRef('')
-const view = shallowRef<'public' | 'admin'>('public')
+const view = shallowRef<'public' | 'admin' | 'products'>('public')
 const toast = shallowRef('')
 const loginError = shallowRef('')
 const helpOpen = shallowRef(false)
+const productSaving = shallowRef(false)
 const adminEmail = computed(() =>
   (runtimeConfig.public.adminEmail || '').trim().toLowerCase()
 )
@@ -66,6 +70,19 @@ async function manage(id: number, decision: 'approved' | 'rejected') {
   window.setTimeout(() => {
     toast.value = ''
   }, 4000)
+}
+async function addProduct(payload: NewProductPayload) {
+  productSaving.value = true
+  try {
+    await createProduct(payload)
+    view.value = 'admin'
+    toast.value = 'Producto añadido al catálogo.'
+  } catch {
+    toast.value = 'No se pudo añadir el producto.'
+  } finally {
+    productSaving.value = false
+    window.setTimeout(() => (toast.value = ''), 4000)
+  }
 }
 </script>
 
@@ -131,6 +148,9 @@ async function manage(id: number, decision: 'approved' | 'rejected') {
           <span class="nav-count nav-count--red">{{
             metrics.pendingRequests
           }}</span></button
+        ><button v-if="isAdmin" class="nav-item" @click="view = 'products'">
+          <span class="nav-icon">＋</span> Nuevo producto
+        </button>
         ><button class="nav-item" @click="view = 'public'">
           <span class="nav-icon">⌘</span> Ver catálogo
         </button>
@@ -169,7 +189,11 @@ async function manage(id: number, decision: 'approved' | 'rejected') {
         <div class="breadcrumb">
           <span>Workspace</span><b>/</b
           ><strong>{{
-            view === 'admin' ? 'Panel de control' : 'Catálogo de regalos'
+            view === 'admin'
+              ? 'Panel de control'
+              : view === 'products'
+                ? 'Nuevo producto'
+                : 'Catálogo de regalos'
           }}</strong>
         </div>
         <div class="top-actions">
@@ -195,6 +219,21 @@ async function manage(id: number, decision: 'approved' | 'rejected') {
           @request="requestProduct"
         />
       </template>
+      <template v-else-if="view === 'products' && isAdmin">
+        <section class="page-intro">
+          <div>
+            <p class="eyebrow">Zona privada · Administrator</p>
+            <h1>Nuevo producto</h1>
+            <p class="intro-copy">
+              Incorpora una nueva referencia al catálogo de regalos.
+            </p>
+          </div>
+          <button class="secondary-button" @click="view = 'admin'">
+            ← Volver al inventario
+          </button>
+        </section>
+        <ProductManagement :saving="productSaving" @submit="addProduct" />
+      </template>
       <template v-else>
         <section class="page-intro">
           <div>
@@ -207,6 +246,9 @@ async function manage(id: number, decision: 'approved' | 'rejected') {
           </div>
           <button class="primary-button" @click="openMovement()">
             <span>＋</span> Registrar movimiento
+          </button>
+          <button class="secondary-button" @click="view = 'products'">
+            ＋ Añadir producto
           </button>
         </section>
         <section class="metrics-grid" aria-label="Resumen de inventario">

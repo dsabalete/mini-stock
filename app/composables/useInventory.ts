@@ -1,4 +1,5 @@
 import { computed, reactive, shallowRef } from 'vue'
+import type { NewProductPayload } from '../components/ProductForm.vue'
 
 export type Product = {
   id: number
@@ -117,6 +118,14 @@ export function useInventory() {
     recentMovements.unshift({ id: Date.now(), ...result.movement })
     movementOpen.value = false
   }
+  async function createProduct(payload: NewProductPayload) {
+    const result = await $fetch<{ product: Product }>('/api/products', {
+      method: 'POST',
+      body: payload,
+    })
+    products.push(result.product)
+    return result.product
+  }
   async function submitRequest(
     email: string,
     productId: number,
@@ -153,6 +162,7 @@ export function useInventory() {
     openMovement,
     closeMovement,
     recordMovement,
+    createProduct,
     metrics,
     recentMovements,
     movementOpen,

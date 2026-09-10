@@ -5,7 +5,12 @@ export default defineVitestConfig({
   test: {
     environment: 'nuxt', // or 'happy-dom' for pure unit tests
     globals: true,
-    exclude: ['**/node_modules/**', '**/.git/**', 'tests/integration/**'],
+    exclude: [
+      '**/node_modules/**',
+      '**/.git/**',
+      'tests/e2e/**',
+      'tests/integration/**',
+    ],
   },
   alias: {
     '@': resolve(__dirname, './'),

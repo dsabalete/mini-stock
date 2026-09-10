@@ -1,0 +1,158 @@
+{"kind":"deck","id":"pr/5d2tjt","name":"Deck"}
+{"kind":"layout","layoutId":"93f88d60-e47e-42ca-8f4a-28c6c9bc6da8","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"5a6f1340-d76d-4cc3-b338-4110fd05ce68","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/7k6nx0","slide":1,"title":"PROYECTO WEB · 2026","textShapes":5}
+{"kind":"shape","id":"sh/0zml0jid","slide":1,"bbox":[0,0,1280,720]}
+{"kind":"shape","id":"sh/zydk7e1s","slide":1,"bbox":[840,0,440,720]}
+{"kind":"shape","id":"sh/ex43y907","slide":1,"bbox":[910,86,264,548]}
+{"kind":"shape","id":"sh/o36l43ip","slide":1,"bbox":[72,86,72,8]}
+{"kind":"textbox","id":"sh/n2xkby14","slide":1,"text":"PROYECTO WEB · 2026","textPreview":"PROYECTO WEB · 2026","textChars":19,"textLines":1,"bbox":[72,126,260,20]}
+{"kind":"textbox","id":"sh/m1432t0j","slide":1,"text":"Stock F1","textPreview":"Stock F1","textChars":8,"textLines":1,"bbox":[72,188,650,90]}
+{"kind":"textbox","id":"sh/xsf2h8z6","slide":1,"text":"Inventario y regalos\npara el equipo","textPreview":"Inventario y regalos | para el equipo","textChars":35,"textLines":2,"bbox":[72,294,620,130]}
+{"kind":"textbox","id":"sh/wr6l83il","slide":1,"text":"Un workspace interno para consultar, solicitar y gestionar stock por ubicación.","textPreview":"Un workspace interno para consultar, solicitar y gestionar stock por ubicación.","textChars":79,"textLines":1,"bbox":[76,468,550,60]}
+{"kind":"textbox","id":"sh/qt43ytwb","slide":1,"text":"Nuxt 4  ·  Cloudflare Pages  ·  D1","textPreview":"Nuxt 4  ·  Cloudflare Pages  ·  D1","textChars":34,"textLines":1,"bbox":[76,628,520,22]}
+{"kind":"image","id":"im/836dwbih","slide":1,"name":"","geometry":"roundRect","alt":"Producto del catálogo","bbox":[934,110,216,500]}
+{"kind":"notes","id":"nt/7k6nx0","slide":1,"text":"Fuente: README.md y estructura del repositorio mini-stock."}
+{"kind":"slide","id":"sl/ekocwt","slide":2,"title":"Qué resuelve Stock F1","textShapes":15}
+{"kind":"textbox","id":"sh/1sjat4fm","slide":2,"text":"Qué resuelve Stock F1","textPreview":"Qué resuelve Stock F1","textChars":21,"textLines":1,"bbox":[72,58,820,56]}
+{"kind":"textbox","id":"sh/epsbipwv","slide":2,"text":"Una única vista para el catálogo, las solicitudes y el inventario operativo.","textPreview":"Una única vista para el catálogo, las solicitudes y el inventario operativo.","textChars":76,"textLines":1,"bbox":[74,120,920,28]}
+{"kind":"shape","id":"sh/fq1sruxg","slide":2,"bbox":[72,164,1136,1]}
+{"kind":"textbox","id":"sh/ofutozex","slide":2,"text":"CONTEXTO","textPreview":"CONTEXTO","textChars":8,"textLines":1,"bbox":[72,202,0,20]}
+{"kind":"textbox","id":"sh/pg3ax4fi","slide":2,"text":"El equipo necesita consultar regalos disponibles sin perder el control de las existencias ni de las solicitudes pendientes.","textPreview":"El equipo necesita consultar regalos disponibles sin perder el control de las existencias ni de las solicitudes pendientes.","textChars":123,"textLines":1,"bbox":[72,234,420,88]}
+{"kind":"textbox","id":"sh/2tsbmpw7","slide":2,"text":"Stock F1 conecta la experiencia del empleado con la operación de Operations y mantiene el stock sincronizado en D1.","textPreview":"Stock F1 conecta la experiencia del empleado con la operación de Operations y mantiene el stock sincronizado en D1.","textChars":115,"textLines":1,"bbox":[72,344,420,72]}
+{"kind":"shape","id":"sh/3elsvuxs","slide":2,"bbox":[590,214,250,250]}
+{"kind":"textbox","id":"sh/5kzalkfe","slide":2,"text":"Catálogo público","textPreview":"Catálogo público","textChars":16,"textLines":1,"bbox":[612,420,206,26]}
+{"kind":"textbox","id":"sh/l83yx4vm","slide":2,"text":"Disponibilidad por línea y ubicación","textPreview":"Disponibilidad por línea y ubicación","textChars":36,"textLines":1,"bbox":[612,448,206,36]}
+{"kind":"shape","id":"sh/k7ah4zu1","slide":2,"bbox":[880,214,250,250]}
+{"kind":"textbox","id":"sh/z61gvudw","slide":2,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[910,244,72,60]}
+{"kind":"textbox","id":"sh/y5sz2pcb","slide":2,"text":"Solicitudes con bloqueo temporal","textPreview":"Solicitudes con bloqueo temporal","textChars":32,"textLines":1,"bbox":[910,326,180,60]}
+{"kind":"textbox","id":"sh/9c3i14vy","slide":2,"text":"El artículo queda reservado mientras Operations decide.","textPreview":"El artículo queda reservado mientras Operations decide.","textChars":55,"textLines":1,"bbox":[910,400,180,52]}
+{"kind":"shape","id":"sh/8buh8jud","slide":2,"bbox":[590,492,540,100]}
+{"kind":"textbox","id":"sh/7algzeds","slide":2,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[618,512,72,60]}
+{"kind":"textbox","id":"sh/m9cz69c7","slide":2,"text":"Control operativo","textPreview":"Control operativo","textChars":17,"textLines":1,"bbox":[700,510,210,28]}
+{"kind":"textbox","id":"sh/h0ni5obu","slide":2,"text":"Entradas, salidas, auditoría y métricas en un panel privado.","textPreview":"Entradas, salidas, auditoría y métricas en un panel privado.","textChars":60,"textLines":1,"bbox":[700,544,370,26]}
+{"kind":"textbox","id":"sh/wzuhcju9","slide":2,"text":"STOCK F1  ·  MINI-STOCK","textPreview":"STOCK F1  ·  MINI-STOCK","textChars":23,"textLines":1,"bbox":[72,684,300,16]}
+{"kind":"textbox","id":"sh/gj218n2l","slide":2,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[1160,684,48,16]}
+{"kind":"image","id":"im/xcfutsfy","slide":2,"name":"","geometry":"roundRect","alt":"Producto del catálogo","bbox":[612,236,206,164]}
+{"kind":"notes","id":"nt/ekocwt","slide":2,"text":"Fuente: README.md, funcionalidades y componentes PublicCatalog.vue, AdminRequests.vue e InventoryTable.vue."}
+{"kind":"slide","id":"sl/djk8ds","slide":3,"title":"Experiencia de solicitud","textShapes":17}
+{"kind":"textbox","id":"sh/21w7mp0v","slide":3,"text":"Experiencia de solicitud","textPreview":"Experiencia de solicitud","textChars":24,"textLines":1,"bbox":[72,58,820,56]}
+{"kind":"textbox","id":"sh/p4n6h4z6","slide":3,"text":"El flujo público reduce la fricción y deja claro cuándo interviene Operations.","textPreview":"El flujo público reduce la fricción y deja claro cuándo interviene Operations.","textChars":78,"textLines":1,"bbox":[74,120,920,28]}
+{"kind":"shape","id":"sh/43epozil","slide":3,"bbox":[72,164,1136,1]}
+{"kind":"shape","id":"sh/fy5obah4","slide":3,"bbox":[72,232,236,250]}
+{"kind":"textbox","id":"sh/udw7i50j","slide":3,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[96,256,62,45]}
+{"kind":"shape","id":"sh/h0n6dkza","slide":3,"bbox":[96,318,184,2]}
+{"kind":"textbox","id":"sh/gzepkfip","slide":3,"text":"Acceso corporativo","textPreview":"Acceso corporativo","textChars":18,"textLines":1,"bbox":[96,344,185,52]}
+{"kind":"textbox","id":"sh/7alo7ah8","slide":3,"text":"El usuario entra con un correo @superwagen.es.","textPreview":"El usuario entra con un correo @superwagen.es.","textChars":46,"textLines":1,"bbox":[96,414,184,44]}
+{"kind":"shape","id":"sh/69cne50n","slide":3,"bbox":[358,232,236,250]}
+{"kind":"textbox","id":"sh/c3qdc7it","slide":3,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[382,256,62,45]}
+{"kind":"shape","id":"sh/d4ze5cze","slide":3,"bbox":[382,318,184,2]}
+{"kind":"textbox","id":"sh/q18vax0n","slide":3,"text":"Selección","textPreview":"Selección","textChars":9,"textLines":1,"bbox":[382,344,185,52]}
+{"kind":"textbox","id":"sh/b2hw32h8","slide":3,"text":"Busca por producto, SKU o referencia y revisa stock por ubicación.","textPreview":"Busca por producto, SKU o referencia y revisa stock por ubicación.","textChars":66,"textLines":1,"bbox":[382,414,184,44]}
+{"kind":"shape","id":"sh/ozqd8nih","slide":3,"bbox":[644,232,236,250]}
+{"kind":"textbox","id":"sh/p0ze1sz2","slide":3,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[668,256,62,45]}
+{"kind":"shape","id":"sh/2x8v6d0b","slide":3,"bbox":[668,318,184,2]}
+{"kind":"textbox","id":"sh/3yhwzihw","slide":3,"text":"Solicitud","textPreview":"Solicitud","textChars":9,"textLines":1,"bbox":[668,344,185,52]}
+{"kind":"textbox","id":"sh/8vaxkry1","slide":3,"text":"Indica cantidad y envía la petición.","textPreview":"Indica cantidad y envía la petición.","textChars":36,"textLines":1,"bbox":[668,414,184,44]}
+{"kind":"shape","id":"sh/9w3edwz6","slide":3,"bbox":[930,232,236,250]}
+{"kind":"textbox","id":"sh/hczexcrq","slide":3,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[954,256,62,45]}
+{"kind":"shape","id":"sh/wbqd4rq5","slide":3,"bbox":[954,318,184,2]}
+{"kind":"textbox","id":"sh/vaxwvm9k","slide":3,"text":"Gestión","textPreview":"Gestión","textChars":7,"textLines":1,"bbox":[954,344,185,52]}
+{"kind":"textbox","id":"sh/upov2h8z","slide":3,"text":"Operations aprueba o rechaza y el stock se actualiza.","textPreview":"Operations aprueba o rechaza y el stock se actualiza.","textChars":53,"textLines":1,"bbox":[954,414,184,44]}
+{"kind":"textbox","id":"sh/9ofetcre","slide":3,"text":"La solicitud bloquea temporalmente el artículo para evitar reservas simultáneas.","textPreview":"La solicitud bloquea temporalmente el artículo para evitar reservas simultáneas.","textChars":80,"textLines":1,"bbox":[72,548,820,30]}
+{"kind":"textbox","id":"sh/8n6d07qt","slide":3,"text":"STOCK F1  ·  MINI-STOCK","textPreview":"STOCK F1  ·  MINI-STOCK","textChars":23,"textLines":1,"bbox":[72,684,300,16]}
+{"kind":"textbox","id":"sh/7mxwr298","slide":3,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[1160,684,48,16]}
+{"kind":"notes","id":"nt/djk8ds","slide":3,"text":"Fuente: app/app.vue, app/components/PublicCatalog.vue y server/api/requests.post.ts."}
+{"kind":"slide","id":"sl/fc8rhl","slide":4,"title":"Panel de Operations","textShapes":16}
+{"kind":"textbox","id":"sh/p0r69wjq","slide":4,"text":"Panel de Operations","textPreview":"Panel de Operations","textChars":19,"textLines":1,"bbox":[72,58,820,56]}
+{"kind":"textbox","id":"sh/2xgnehkz","slide":4,"text":"La operación trabaja sobre el mismo inventario que ve el catálogo público.","textPreview":"La operación trabaja sobre el mismo inventario que ve el catálogo público.","textChars":74,"textLines":1,"bbox":[74,120,920,28]}
+{"kind":"shape","id":"sh/3y9o7m1k","slide":4,"bbox":[72,164,1136,1]}
+{"kind":"shape","id":"sh/c3i5kb21","slide":4,"bbox":[72,212,1136,360]}
+{"kind":"shape","id":"sh/d4r6dwjm","slide":4,"bbox":[96,238,262,308]}
+{"kind":"textbox","id":"sh/q10ni1kv","slide":4,"text":"CENTRO DE CONTROL","textPreview":"CENTRO DE CONTROL","textChars":17,"textLines":1,"bbox":[120,264,180,18]}
+{"kind":"textbox","id":"sh/r29ob61g","slide":4,"text":"Stock F1","textPreview":"Stock F1","textChars":8,"textLines":1,"bbox":[120,302,160,34]}
+{"kind":"shape","id":"sh/s7y5872x","slide":4,"bbox":[120,370,180,28]}
+{"kind":"textbox","id":"sh/t87m1cji","slide":4,"text":"Resumen","textPreview":"Resumen","textChars":7,"textLines":1,"bbox":[134,376,160,18]}
+{"kind":"shape","id":"sh/dcj2lon2","slide":4,"bbox":[120,410,180,28]}
+{"kind":"textbox","id":"sh/cbals36h","slide":4,"text":"Solicitudes","textPreview":"Solicitudes","textChars":11,"textLines":1,"bbox":[134,416,160,18]}
+{"kind":"shape","id":"sh/ba1kjy5w","slide":4,"bbox":[120,450,180,28]}
+{"kind":"textbox","id":"sh/q9s3qtob","slide":4,"text":"Movimientos","textPreview":"Movimientos","textChars":11,"textLines":1,"bbox":[134,456,160,18]}
+{"kind":"shape","id":"sh/lg32p8ny","slide":4,"bbox":[120,490,180,28]}
+{"kind":"textbox","id":"sh/0fulw36d","slide":4,"text":"Catálogo","textPreview":"Catálogo","textChars":8,"textLines":1,"bbox":[134,496,160,18]}
+{"kind":"textbox","id":"sh/zelkny5s","slide":4,"text":"Solicitudes pendientes","textPreview":"Solicitudes pendientes","textChars":22,"textLines":1,"bbox":[400,254,220,32]}
+{"kind":"textbox","id":"sh/ydc3uto7","slide":4,"text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[400,304,100,70]}
+{"kind":"textbox","id":"sh/94nmtsnu","slide":4,"text":"Unidades en stock","textPreview":"Unidades en stock","textChars":17,"textLines":1,"bbox":[760,254,280,32]}
+{"kind":"textbox","id":"sh/83ul0nmp","slide":4,"text":"128","textPreview":"128","textChars":3,"textLines":1,"bbox":[760,304,160,70]}
+{"kind":"shape","id":"sh/sn25wrul","slide":4,"bbox":[400,414,700,1]}
+{"kind":"textbox","id":"sh/tov6pwv6","slide":4,"text":"Aprobación y rechazo actualizan solicitud, stock y auditoría en la misma operación.","textPreview":"Aprobación y rechazo actualizan solicitud, stock y auditoría en la misma operación.","textChars":83,"textLines":1,"bbox":[400,448,620,50]}
+{"kind":"textbox","id":"sh/6lknuhcf","slide":4,"text":"Vista conceptual basada en las métricas y paneles implementados.","textPreview":"Vista conceptual basada en las métricas y paneles implementados.","textChars":64,"textLines":1,"bbox":[400,514,600,18]}
+{"kind":"textbox","id":"sh/7mt4nmd0","slide":4,"text":"STOCK F1  ·  MINI-STOCK","textPreview":"STOCK F1  ·  MINI-STOCK","textChars":23,"textLines":1,"bbox":[72,684,300,16]}
+{"kind":"textbox","id":"sh/gbm50rux","slide":4,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[1160,684,48,16]}
+{"kind":"notes","id":"nt/fc8rhl","slide":4,"text":"Los números del mockup son ilustrativos para explicar la interfaz. La aplicación calcula métricas desde el inventario real. Fuente: app/app.vue, AdminRequests.vue y composables/useInventory.ts."}
+{"kind":"slide","id":"sl/wka55c","slide":5,"title":"Arquitectura de la solución","textShapes":16}
+{"kind":"textbox","id":"sh/qh0nylgr","slide":5,"text":"Arquitectura de la solución","textPreview":"Arquitectura de la solución","textChars":27,"textLines":1,"bbox":[72,58,820,56]}
+{"kind":"textbox","id":"sh/dkb6t0zi","slide":5,"text":"Una aplicación Nuxt con persistencia D1 y controles de acceso en el servidor.","textPreview":"Una aplicación Nuxt con persistencia D1 y controles de acceso en el servidor.","textChars":77,"textLines":1,"bbox":[74,120,920,28]}
+{"kind":"shape","id":"sh/cji50vyx","slide":5,"bbox":[72,164,1136,1]}
+{"kind":"shape","id":"sh/zmtovah8","slide":5,"bbox":[72,250,250,150]}
+{"kind":"textbox","id":"sh/elkn25gn","slide":5,"text":"Interfaz Nuxt 4","textPreview":"Interfaz Nuxt 4","textChars":15,"textLines":1,"bbox":[96,278,202,30]}
+{"kind":"textbox","id":"sh/1ob6xkze","slide":5,"text":"Catálogo, panel de Operations y estado compartido","textPreview":"Catálogo, panel de Operations y estado compartido","textChars":49,"textLines":1,"bbox":[96,326,202,52]}
+{"kind":"shape","id":"sh/0n254fyt","slide":5,"bbox":[430,250,250,150]}
+{"kind":"textbox","id":"sh/fqp4j6h4","slide":5,"text":"API server-side","textPreview":"API server-side","textChars":15,"textLines":1,"bbox":[454,278,202,30]}
+{"kind":"textbox","id":"sh/upgnq10j","slide":5,"text":"Inventario, solicitudes, movimientos y auditoría","textPreview":"Inventario, solicitudes, movimientos y auditoría","textChars":48,"textLines":1,"bbox":[454,326,202,52]}
+{"kind":"shape","id":"sh/gnids3y1","slide":5,"bbox":[788,250,250,150]}
+{"kind":"textbox","id":"sh/horu18zm","slide":5,"text":"Cloudflare D1","textPreview":"Cloudflare D1","textChars":13,"textLines":1,"bbox":[812,278,202,30]}
+{"kind":"textbox","id":"sh/ul0vqdgv","slide":5,"text":"Productos, stock, solicitudes y registro de actividad","textPreview":"Productos, stock, solicitudes y registro de actividad","textChars":53,"textLines":1,"bbox":[812,326,202,52]}
+{"kind":"shape","id":"sh/vm9czyhg","slide":5,"bbox":[322,318,108,2]}
+{"kind":"shape","id":"sh/4r2dwnyd","slide":5,"bbox":[680,318,108,2]}
+{"kind":"textbox","id":"sh/5sbe5szi","slide":5,"text":"Cloudflare Pages","textPreview":"Cloudflare Pages","textChars":16,"textLines":1,"bbox":[72,482,250,26]}
+{"kind":"textbox","id":"sh/ip0vudg7","slide":5,"text":"Despliegue preparado con Wrangler y build específico para Pages.","textPreview":"Despliegue preparado con Wrangler y build específico para Pages.","textChars":64,"textLines":1,"bbox":[72,516,360,40]}
+{"kind":"textbox","id":"sh/3qtc3ihs","slide":5,"text":"Cloudflare Access","textPreview":"Cloudflare Access","textChars":17,"textLines":1,"bbox":[530,482,250,26]}
+{"kind":"textbox","id":"sh/kvydkjyt","slide":5,"text":"Las rutas de escritura validan JWT en origen antes de tocar datos.","textPreview":"Las rutas de escritura validan JWT en origen antes de tocar datos.","textChars":66,"textLines":1,"bbox":[530,516,360,40]}
+{"kind":"textbox","id":"sh/lw7utoze","slide":5,"text":"Seguridad transversal","textPreview":"Seguridad transversal","textChars":21,"textLines":1,"bbox":[930,482,220,26]}
+{"kind":"textbox","id":"sh/10f2hgn6","slide":5,"text":"Rate limiting, verificación de email y logs estructurados.","textPreview":"Rate limiting, verificación de email y logs estructurados.","textChars":58,"textLines":1,"bbox":[930,516,240,40]}
+{"kind":"textbox","id":"sh/0z618b6l","slide":5,"text":"STOCK F1  ·  MINI-STOCK","textPreview":"STOCK F1  ·  MINI-STOCK","textChars":23,"textLines":1,"bbox":[72,684,300,16]}
+{"kind":"textbox","id":"sh/fexkfq50","slide":5,"text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[1160,684,48,16]}
+{"kind":"notes","id":"nt/wka55c","slide":5,"text":"Fuente: README.md, nuxt.config.ts, wrangler.toml, server/middleware/access.ts, server/middleware/rateLimit.ts y server/utils/audit.ts."}
+{"kind":"slide","id":"sl/0xwmqu","slide":6,"title":"Estado actual","textShapes":28}
+{"kind":"textbox","id":"sh/8b6lwby1","slide":6,"text":"Estado actual","textPreview":"Estado actual","textChars":13,"textLines":1,"bbox":[72,58,820,56]}
+{"kind":"textbox","id":"sh/nax436hg","slide":6,"text":"La base funcional está cubierta; la siguiente etapa se centra en robustez operativa y escala.","textPreview":"La base funcional está cubierta; la siguiente etapa se centra en robustez operativa y escala.","textChars":93,"textLines":1,"bbox":[74,120,920,28]}
+{"kind":"shape","id":"sh/m9o3u1gv","slide":6,"bbox":[72,164,1136,1]}
+{"kind":"textbox","id":"sh/l8fm1wza","slide":6,"text":"IMPLEMENTADO","textPreview":"IMPLEMENTADO","textChars":12,"textLines":1,"bbox":[72,212,220,20]}
+{"kind":"textbox","id":"sh/076lsryp","slide":6,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[76,252,24,24]}
+{"kind":"textbox","id":"sh/z6x4zmh4","slide":6,"text":"Catálogo público con imágenes y disponibilidad","textPreview":"Catálogo público con imágenes y disponibilidad","textChars":46,"textLines":1,"bbox":[110,250,440,30]}
+{"kind":"textbox","id":"sh/y5o3qhgj","slide":6,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[76,296,24,24]}
+{"kind":"textbox","id":"sh/54jmd0fe","slide":6,"text":"Solicitudes con bloqueo temporal","textPreview":"Solicitudes con bloqueo temporal","textChars":32,"textLines":1,"bbox":[110,294,440,30]}
+{"kind":"textbox","id":"sh/k3a54vyt","slide":6,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[76,340,24,24]}
+{"kind":"textbox","id":"sh/a5kvedwr","slide":6,"text":"Aprobación y rechazo desde Operations","textPreview":"Aprobación y rechazo desde Operations","textChars":37,"textLines":1,"bbox":[110,338,440,30]}
+{"kind":"textbox","id":"sh/v6tw7yxc","slide":6,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[76,384,24,24]}
+{"kind":"textbox","id":"sh/wrmdg3eh","slide":6,"text":"Entradas y salidas por SC y SBD","textPreview":"Entradas y salidas por SC y SBD","textChars":31,"textLines":1,"bbox":[110,382,440,30]}
+{"kind":"textbox","id":"sh/xsve98f2","slide":6,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[76,428,24,24]}
+{"kind":"textbox","id":"sh/m1kvatwf","slide":6,"text":"Rate limiting, Access JWT y auditoría","textPreview":"Rate limiting, Access JWT y auditoría","textChars":37,"textLines":1,"bbox":[110,426,440,30]}
+{"kind":"textbox","id":"sh/n2tc3yx0","slide":6,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[76,472,24,24]}
+{"kind":"textbox","id":"sh/832dc3el","slide":6,"text":"Tests unitarios e integración","textPreview":"Tests unitarios e integración","textChars":29,"textLines":1,"bbox":[110,470,440,30]}
+{"kind":"textbox","id":"sh/94be58f6","slide":6,"text":"SIGUIENTE ETAPA","textPreview":"SIGUIENTE ETAPA","textChars":15,"textLines":1,"bbox":[690,212,260,20]}
+{"kind":"textbox","id":"sh/6x4vmxwz","slide":6,"text":"→","textPreview":"→","textChars":1,"textLines":1,"bbox":[694,252,24,24]}
+{"kind":"textbox","id":"sh/7ydwfixk","slide":6,"text":"Integridad de datos con constraints y locking","textPreview":"Integridad de datos con constraints y locking","textChars":45,"textLines":1,"bbox":[730,250,420,38]}
+{"kind":"textbox","id":"sh/32ps7udw","slide":6,"text":"→","textPreview":"→","textChars":1,"textLines":1,"bbox":[694,308,24,24]}
+{"kind":"textbox","id":"sh/21gbepcb","slide":6,"text":"Paginación y rendimiento para inventarios grandes","textPreview":"Paginación y rendimiento para inventarios grandes","textChars":49,"textLines":1,"bbox":[730,306,420,38]}
+{"kind":"textbox","id":"sh/p47a9kvm","slide":6,"text":"→","textPreview":"→","textChars":1,"textLines":1,"bbox":[694,364,24,24]}
+{"kind":"textbox","id":"sh/o3ytgfuh","slide":6,"text":"Operaciones masivas y exportación CSV/Excel","textPreview":"Operaciones masivas y exportación CSV/Excel","textChars":43,"textLines":1,"bbox":[730,362,420,38]}
+{"kind":"textbox","id":"sh/b6psbuds","slide":6,"text":"→","textPreview":"→","textChars":1,"textLines":1,"bbox":[694,420,24,24]}
+{"kind":"textbox","id":"sh/q5gbipc7","slide":6,"text":"E2E, CI/CD, previews y monitorización","textPreview":"E2E, CI/CD, previews y monitorización","textChars":37,"textLines":1,"bbox":[730,418,420,38]}
+{"kind":"shape","id":"sh/d8rad4vy","slide":6,"bbox":[690,500,440,72]}
+{"kind":"textbox","id":"sh/c7ytkzud","slide":6,"text":"Prioridad recomendada","textPreview":"Prioridad recomendada","textChars":21,"textLines":1,"bbox":[714,516,180,20]}
+{"kind":"textbox","id":"sh/za9sfed4","slide":6,"text":"Cerrar integridad de datos antes de escalar volumen.","textPreview":"Cerrar integridad de datos antes de escalar volumen.","textChars":52,"textLines":1,"bbox":[714,542,370,22]}
+{"kind":"textbox","id":"sh/y90bm9cj","slide":6,"text":"STOCK F1  ·  MINI-STOCK","textPreview":"STOCK F1  ·  MINI-STOCK","textChars":23,"textLines":1,"bbox":[72,684,300,16]}
+{"kind":"textbox","id":"sh/wz29wjah","slide":6,"text":"06","textPreview":"06","textChars":2,"textLines":1,"bbox":[1160,684,48,16]}
+{"kind":"notes","id":"nt/0xwmqu","slide":6,"text":"Fuente: TODO.md. “Implementado” recoge tareas marcadas como completadas. “Siguiente etapa” resume pendientes del roadmap; la prioridad es una recomendación editorial, no una decisión registrada en el repositorio."}
+{"kind":"slide","id":"sl/ad4t9g","slide":7,"title":"RESUMEN","textShapes":5}
+{"kind":"shape","id":"sh/donu18ju","slide":7,"bbox":[0,0,1280,720]}
+{"kind":"shape","id":"sh/q1cbqd03","slide":7,"bbox":[72,92,72,8]}
+{"kind":"textbox","id":"sh/b2lszi1o","slide":7,"text":"RESUMEN","textPreview":"RESUMEN","textChars":7,"textLines":1,"bbox":[72,140,200,20]}
+{"kind":"textbox","id":"sh/ozuto3ix","slide":7,"text":"Stock F1 convierte el inventario en una experiencia sencilla para el equipo y controlable para Operations.","textPreview":"Stock F1 convierte el inventario en una experiencia sencilla para el equipo y controlable para Operations.","textChars":106,"textLines":1,"bbox":[72,196,840,120]}
+{"kind":"shape","id":"sh/p03ax8ji","slide":7,"bbox":[72,390,520,2]}
+{"kind":"textbox","id":"sh/2xcbmt07","slide":7,"text":"Producto claro · operación trazable · base preparada para crecer","textPreview":"Producto claro · operación trazable · base preparada para crecer","textChars":64,"textLines":1,"bbox":[72,428,720,34]}
+{"kind":"textbox","id":"sh/gvatkji1","slide":7,"text":"mini-stock","textPreview":"mini-stock","textChars":10,"textLines":1,"bbox":[72,622,200,22]}
+{"kind":"textbox","id":"sh/1wjatojm","slide":7,"text":"Presentación del proyecto","textPreview":"Presentación del proyecto","textChars":25,"textLines":1,"bbox":[1020,622,170,22]}
+{"kind":"image","id":"im/ulcrmtwz","slide":7,"name":"","geometry":"roundRect","alt":"Producto del catálogo","bbox":[940,154,220,330]}
+{"kind":"notes","id":"nt/ad4t9g","slide":7,"text":"Cierre basado en el alcance documentado del proyecto."}
