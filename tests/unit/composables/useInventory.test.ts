@@ -1,12 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
+// Mock $fetch globally before any imports that might use it
+const $fetchMock = vi.fn()
+vi.stubGlobal('$fetch', $fetchMock)
+
 let useInventory: any
-let $fetchMock: ReturnType<typeof vi.fn>
 
 beforeEach(async () => {
   vi.resetModules()
-  $fetchMock = vi.fn()
-  vi.stubGlobal('$fetch', $fetchMock)
+  $fetchMock.mockReset()
   const imported = await import('../../../app/composables/useInventory')
   useInventory = imported.useInventory
 })
