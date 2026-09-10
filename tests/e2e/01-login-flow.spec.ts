@@ -14,6 +14,6 @@ test('login with invalid email shows error', async ({ page }) => {
   await page.locator('#email').fill('invalid-email')
   await page.locator('.login-button').click()
   await expect(page.locator('.login-error')).toContainText(
-    'Introduce un correo corporativo con dominio @superwagen.es.',
+    'Introduce un correo corporativo con dominio @superwagen.es.'
   )
 })

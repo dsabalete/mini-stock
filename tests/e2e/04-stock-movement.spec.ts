@@ -15,6 +15,6 @@ test('admin records a stock movement', async ({ page }) => {
   await page.getByRole('button', { name: /Guardar movimiento/ }).click()
 
   await expect(page.locator('.toast-message')).toContainText(
-    'Movimiento registrado exitosamente.',
+    'Movimiento registrado exitosamente.'
   )
-}
+})

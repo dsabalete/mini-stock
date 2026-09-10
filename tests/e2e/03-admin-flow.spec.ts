@@ -29,6 +29,6 @@ test('admin approves a pending request', async ({ page }) => {
 
   await firstRequest.locator('.approve-button').click()
   await expect(page.locator('.toast-message')).toContainText(
-    'Pedido aprobado y stock actualizado.',
+    'Pedido aprobado y stock actualizado.'
   )
 })

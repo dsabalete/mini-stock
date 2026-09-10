@@ -7,8 +7,12 @@ test('browse public catalog and submit request', async ({ page }) => {
   await page.locator('.login-button').click()
   await expect(page.locator('.sidebar')).toBeVisible({ timeout: 10000 })
 
-  await page.waitForSelector('input[placeholder="Buscar por producto o referencia..."]')
-  await page.locator('input[placeholder="Buscar por producto o referencia..."]').fill('')
+  await page.waitForSelector(
+    'input[placeholder="Buscar por producto o referencia..."]'
+  )
+  await page
+    .locator('input[placeholder="Buscar por producto o referencia..."]')
+    .fill('')
   await page.locator('button:has-text("Todos")').click()
 
   const productCount = await page.locator('.product-card').count()
